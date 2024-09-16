@@ -9,6 +9,8 @@ GRID_SIZE = (100, 100)
 GRID = np.zeros(GRID_SIZE)
 # Based on recommendation 1
 CENTER_X, CENTER_Y = 49, 0
+# TO BE USED FOR GRID INTERPOLATION
+PREV_X, PREV_Y = None, None
 # Ultrasonic Sensor Parameters
 MIN_ANGLE, MAX_ANGLE = -60, 61
 # Based on recommendation 2
