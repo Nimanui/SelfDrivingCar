@@ -29,7 +29,7 @@ class TestAdvancedMapping(unittest.TestCase):
         dist = self.mock_fc.get_distance_at(angle)
         theta_rad = np.radians(angle)
 
-        advanced_mapping.advanced_mapping(theta_rad, dist)
+        advanced_mapping.advanced_mapping(theta_rad, dist, angle)
 
         # Expected position in the grid
         expected_x = advanced_mapping.CENTER_X + int(dist * np.sin(theta_rad))
@@ -54,7 +54,7 @@ class TestAdvancedMapping(unittest.TestCase):
         for angle, _ in readings:
             dist = self.mock_fc.get_distance_at(angle)
             theta_rad = np.radians(angle)
-            advanced_mapping.advanced_mapping(theta_rad, dist)
+            advanced_mapping.advanced_mapping(theta_rad, dist, angle)
 
         # Expected positions for each reading
         for angle, dist in readings:
