@@ -16,6 +16,10 @@ MIN_ANGLE, MAX_ANGLE = -60, 61
 # Based on recommendation 2
 ANGLE_STEP_SIZE = 5
 
+# Set interpolate thresholds
+MAX_DIST_DIFF = 10
+MAX_ANGLE_DIFF = 10
+
 
 def interpolate_line(x0, y0, x1, y1):
     """Interpolates the line between two points in the grid."""
@@ -42,7 +46,7 @@ def interpolate_line(x0, y0, x1, y1):
     
     return points
 
-def advanced_mapping(theta_rad: int, dist: int):
+def advanced_mapping(theta_rad: int, dist: int, theta_deg: int):
     """
     Function to convert sensor readings into Cartesian
     coordiate grid.	Performs interpolation of grid cells
@@ -58,12 +62,16 @@ def advanced_mapping(theta_rad: int, dist: int):
     	The distance (cm) to the detected object at
         the input angle.
 
+    theta_deg : int
+        The angle (in degrees) used by the ultrasonic
+        sensor for the reading.
+
     Returns
     =======
     None
 
     """
-    global PREV_X, PREV_Y
+    global PREV_X, PREV_Y, PREV_DIST, PREV_THETA
     
     X_position = CENTER_X + int(dist*np.sin(theta_rad))
     Y_position = CENTER_Y + int(dist*np.cos(theta_rad))
@@ -72,15 +80,20 @@ def advanced_mapping(theta_rad: int, dist: int):
 
     # New: Check if reading is within bounds of GRID
     if 0 <= X_position < GRID_SIZE[0] and 0 <= Y_position < GRID_SIZE[1]:
-    	GRID[X_position, Y_position] = 1
-    	# New: Add code for interpolation
-    	if PREV_X is not None and PREV_Y is not None:
-    		line_points = interpolate_line(PREV_X, PREV_Y, X_position, Y_position)
-    		for (x, y) in line_points:
-    			if 0 <= x < GRID_SIZE[0] and 0 <= y < GRID_SIZE[1]:
-    				GRID[x, y] = 1
+        GRID[X_position, Y_position] = 1
+        # New: Add code for interpolation
+        if PREV_X is not None and PREV_Y is not None:
+            dist_diff = abs(dist - PREV_DIST)
+            angle_diff = abs(theta_deg - PREV_THETA)
 
-    	PREV_X, PREV_Y = X_position, Y_position
+            if dist_diff <= MAX_DIST_DIFF and angle_diff <= MAX_ANGLE_DIFF:
+            	line_points = interpolate_line(PREV_X, PREV_Y, X_position, Y_position)
+            	for (x, y) in line_points:
+            		if 0 <= x < GRID_SIZE[0] and 0 <= y < GRID_SIZE[1]:
+            			GRID[x, y] = 1
+
+        PREV_X, PREV_Y = X_position, Y_position
+        PREV_DIST, PREV_THETA = dist, theta_deg
 
 
 def main():
@@ -90,12 +103,13 @@ def main():
     	dist = fc.get_distance_at(theta)
     	print(f"Angle: {theta}, Distance: {dist}")
     	# Convert the angle to radians before passing to function
-    	advanced_mapping(np.radians(theta), dist)
+    	advanced_mapping(np.radians(theta), dist, theta)
     	time.sleep(0.1)
 
     # Reset after completing a scan
-    global PREV_X, PREV_Y
+    global PREV_X, PREV_Y, PREV_DIST, PREV_THETA
     PREV_X, PREV_Y = None, None
+    PREV_DIST, PREV_THETA = None, None
 
 if __name__ == "__main__":
 	try:
