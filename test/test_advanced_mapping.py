@@ -3,11 +3,10 @@ from unittest.mock import MagicMock
 import numpy as np
 import sys
 
-# Mock picar_4wd before importing advanced_mapping
+# Mock picar_4wd
 mock_picar_4wd = MagicMock()
 sys.modules['picar_4wd'] = mock_picar_4wd
 
-# Now import advanced_mapping after mocking picar_4wd
 import advanced_mapping
 
 class TestAdvancedMapping(unittest.TestCase):
