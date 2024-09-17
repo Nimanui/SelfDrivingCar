@@ -39,9 +39,11 @@ def advanced_mapping(theta_rad: int, dist: int):
 	"""
 	X_position = CENTER_X + int(dist*np.sin(theta_rad))
 	Y_position = CENTER_Y + int(dist*np.cos(theta_rad))
-	# TODO: Check if reading is within bounds of GRID
-	GRID[X_position, Y_position] = 1
-	# TODO: Add code for interpolation
+
+	# New: Check if reading is within bounds of GRID
+	if 0 <= X_position < GRID_SIZE[0] and 0 <= Y_position < GRID_SIZE[1]:
+		GRID[X_position, Y_position] = 1
+		# TODO: Add code for interpolation
 
 def main():
 	# Loop through the Minimum angle and maximum angle with the specified Angle Step Size
