@@ -14,7 +14,7 @@ class PathFinder:
 
     def _grid_to_graph(self, grid):
         """
-        Convert the grid to a NetworkX graph.
+        Convert the grid to networkx graph.
 
         Parameters:
         - grid: 2D numpy array
@@ -46,7 +46,7 @@ class PathFinder:
 
     def find_path(self, start, goal):
         """
-        Find the shortest path using A* algorithm.
+        Find the shortest path using A* algo.
 
         Parameters:
         - start: Tuple (x, y)
@@ -59,7 +59,7 @@ class PathFinder:
             path = nx.astar_path(self.graph, start, goal, heuristic=self.heuristic)
             return path
         except nx.NetworkXNoPath:
-            print("No path found.")
+           # print("No path found.")
             return None
 
 """
