@@ -1,6 +1,7 @@
 import numpy as np
 import networkx as nx
 
+
 class PathFinder:
     def __init__(self, grid):
         """
@@ -34,8 +35,8 @@ class PathFinder:
         Heuristic function for A* (Manhattan distance).
 
         Parameters:
-        - node1: Tuple (x1, y1)
-        - node2: Tuple (x2, y2)
+        - node1: tuple (x1, y1)
+        - node2: tuple (x2, y2)
 
         Returns:
         - Heuristic distance between node1 and node2
@@ -49,18 +50,49 @@ class PathFinder:
         Find the shortest path using A* algo.
 
         Parameters:
-        - start: Tuple (x, y)
-        - goal: Tuple (x, y)
+        - start: tuple (x, y)
+        - goal: tuple (x, y)
 
         Returns:
-        - path: List of positions from start to goal
+        - path: list of positions from start to goal
         """
         try:
             path = nx.astar_path(self.graph, start, goal, heuristic=self.heuristic)
             return path
         except nx.NetworkXNoPath:
-           # print("No path found.")
+            # print("No path found.")
             return None
+
+    def path_to_commands(self, path):
+        """
+        Convert a path tuples to movement commands.
+
+        Parameters:
+        - path: tuples representing the path
+
+        Returns:
+        - commands: list of commands ["left", "right", "forward", "backward"]
+        """
+        commands = []
+        for i in range(1, len(path)):
+            current_position = path[i - 1]
+            next_position = path[i]
+
+            delta_x = next_position[0] - current_position[0]
+            delta_y = next_position[1] - current_position[1]
+
+            # Determine the direction
+            if delta_x == 1 and delta_y == 0:
+                commands.append("down")
+            elif delta_x == -1 and delta_y == 0:
+                commands.append("up")
+            elif delta_x == 0 and delta_y == 1:
+                commands.append("right")
+            elif delta_x == 0 and delta_y == -1:
+                commands.append("left")
+
+        return commands
+
 
 """
 Example usage:
@@ -76,6 +108,8 @@ path = pathfinder.find_path(start, goal)
 
 if path:
     print("Path:", path)
+    commands = pathfinder.path_to_commands(path)
+    print("Commands:", commands)
 else:
     print("No path found.")
 """
