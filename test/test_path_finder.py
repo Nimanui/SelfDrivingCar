@@ -2,6 +2,7 @@ import unittest
 import numpy as np
 from path_finder import PathFinder
 
+
 class TestPathFinder(unittest.TestCase):
 
     def setUp(self):
@@ -32,6 +33,14 @@ class TestPathFinder(unittest.TestCase):
         path = self.pathfinder.find_path(start, goal)
         self.assertIsNone(path, "Error: No path should be found")
 
+    def test_commands(self):
+        """Test path avoids obstacles."""
+        start = (0, 0)
+        goal = (2, 2)
+        path = self.pathfinder.find_path(start, goal)
+        commands = self.pathfinder.path_to_commands(path)
+        self.assertEqual(commands, ['down', 'down', 'right', 'right'],
+                         "Error: Validate the generated commands")
 
     def test_path_around_obstacles(self):
         """Test path avoids obstacles."""
@@ -40,6 +49,7 @@ class TestPathFinder(unittest.TestCase):
         path = self.pathfinder.find_path(start, goal)
         for obstacle in [(4, 5), (5, 5), (6, 5)]:
             self.assertNotIn(obstacle, path, "Error: Path should avoid obstacles")
+
 
 if __name__ == '__main__':
     unittest.main()

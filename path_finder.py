@@ -30,7 +30,7 @@ class PathFinder:
         G.remove_nodes_from(obstacles)
         return G
 
-    def heuristic(self, node1, node2):
+    def _heuristic(self, node1, node2):
         """
         Heuristic function for A* (Manhattan distance).
 
@@ -57,7 +57,7 @@ class PathFinder:
         - path: list of positions from start to goal
         """
         try:
-            path = nx.astar_path(self.graph, start, goal, heuristic=self.heuristic)
+            path = nx.astar_path(self.graph, start, goal, heuristic=self._heuristic)
             return path
         except nx.NetworkXNoPath:
             # print("No path found.")
