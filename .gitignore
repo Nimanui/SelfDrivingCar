@@ -163,3 +163,6 @@ cython_debug/
 
 # ignore Mac
 .DS_Store
+
+# ignore pycharm
+.idea/**
