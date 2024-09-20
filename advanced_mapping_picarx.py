@@ -1,6 +1,7 @@
 import numpy as np
 import time
 from picarx import Picarx
+import matplotlib.pyplot as plt
 import argparse
 import sys
 
@@ -90,7 +91,7 @@ def interpolate_line(x0, y0, x1, y1):
     step_y = 1 if y0 < y1 else -1
     error = delta_x - delta_y
 
-    while (x0 != x1 or y0 != y1):
+    while x0 != x1 or y0 != y1:
         points.append((x0, y0))
         error2 = 2 * error
         if error2 > -delta_y:
@@ -178,6 +179,7 @@ def detection_results(fps_text):
         detection_result_list.clear()
         return found_list
 
+
 def main():
     image_obstacles = []
     # Loop through the Minimum angle and maximum angle with the specified Angle Step Size
@@ -203,6 +205,11 @@ def main():
         fps_text = 'FPS = {:.1f}'.format(FPS)
         detection_results(fps_text)
         time.sleep(0.1)
+
+    # Image processsing
+    GRID[CENTER_X, CENTER_Y] = 2
+    tranformed_grid = np.rot90(GRID)
+    plt.imsave("mapping.png", tranformed_grid)
 
     # Reset after completing a scan
     global PREV_X, PREV_Y, PREV_DIST, PREV_THETA
