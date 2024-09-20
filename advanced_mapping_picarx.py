@@ -157,23 +157,29 @@ def advanced_mapping(theta_rad: int, dist: int, theta_deg: int):
 
 def detection_results(fps_text):
     if detection_result_list:
+        found_list = []
         detected_list = detection_result_list[0].detections
         for detected in detected_list:
             category = detected.categories
             if category[0].category_name == "stop sign":
                 print("stop")
                 print(detected)
+                found_list.append("stop")
             elif category[0].category_name == "person":
                 print("stop, person")
                 print(detected)
+                found_list.append("person")
             elif category[0].category_name != "":
                 print(detected)
+                found_list.append("obstacle")
             else:
                 print(fps_text)
         # print(detection_result_list)
         detection_result_list.clear()
+        return found_list
 
 def main():
+    image_obstacles = []
     # Loop through the Minimum angle and maximum angle with the specified Angle Step Size
     for theta in range(MIN_ANGLE, MAX_ANGLE, ANGLE_STEP_SIZE):
         # Get the reading at the angle
@@ -192,7 +198,7 @@ def main():
         mp_image = mp.Image(image_format=mp.ImageFormat.SRGB, data=rgb_image)
 
         # Run object detection using the model.
-        detector.detect_async(mp_image, time.time_ns() // 1_000_000)
+        image_obstacles.append(detector.detect_async(mp_image, time.time_ns() // 1_000_000))
         # Show the FPS
         fps_text = 'FPS = {:.1f}'.format(FPS)
         detection_results(fps_text)
