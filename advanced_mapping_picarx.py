@@ -4,7 +4,7 @@ from picarx import Picarx
 import matplotlib.pyplot as plt
 import argparse
 import sys
-import path_finder as pf
+# import path_finder as pf
 
 import cv2
 import mediapipe as mp
@@ -35,7 +35,7 @@ CENTER_X, CENTER_Y = 49, 0
 # TO BE USED FOR GRID INTERPOLATION
 PREV_X, PREV_Y = None, None
 # Ultrasonic Sensor Parameters
-MIN_ANGLE, MAX_ANGLE = -60, 61
+MIN_ANGLE, MAX_ANGLE = -60, 60
 # keeping it high to start as the picarx has a bit more stuff on the servo
 ANGLE_STEP_SIZE = 10
 
@@ -180,9 +180,13 @@ def detection_results(fps_text):
         detection_result_list.clear()
 
 
-def main():
+def sensor_loop(direction):
+    """
+    Parameters:
+    - direction: left to right or right to left? 1 for left to right, -1 for right to left
+    """
     # Loop through the Minimum angle and maximum angle with the specified Angle Step Size
-    for theta in range(MIN_ANGLE, MAX_ANGLE, ANGLE_STEP_SIZE):
+    for theta in range(direction * MIN_ANGLE, direction * (MAX_ANGLE + 1), direction * ANGLE_STEP_SIZE):
         # Get the reading at the angle
         px.set_cam_pan_angle(theta)
         dist = round(px.ultrasonic.read(), 2)
@@ -208,8 +212,10 @@ def main():
     # Image processsing
     GRID[CENTER_X, CENTER_Y] = 2
     tranformed_grid = np.rot90(GRID)
-    plt.imsave("mapping.png", tranformed_grid)
-
+    if direction == 1:
+        plt.imsave("mapping.png", tranformed_grid)
+    else:
+        plt.imsave("mapping_reverse.png", tranformed_grid)
     # Reset after completing a scan
     global PREV_X, PREV_Y, PREV_DIST, PREV_THETA
     PREV_X, PREV_Y = None, None
@@ -219,6 +225,7 @@ def main():
 
 if __name__ == "__main__":
     try:
-        main()
+        sensor_loop(1)
+        sensor_loop(-1)
     finally:
         px.stop()

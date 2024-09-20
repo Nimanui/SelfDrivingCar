@@ -54,6 +54,7 @@ detection_result_list = []
 model = 'efficientdet_lite0.tflite'
 score_threshold = 0.25
 max_results = 5
+image_obstacles = []
 
 
 def save_result(result: vision.ObjectDetectorResult, unused_output_image: mp.Image, timestamp_ms: int):
@@ -154,29 +155,31 @@ def advanced_mapping(theta_rad: int, dist: int, theta_deg: int):
 
 def detection_results(fps_text):
     if detection_result_list:
-        found_list = []
         detected_list = detection_result_list[0].detections
         for detected in detected_list:
             category = detected.categories
             if category[0].category_name == "stop sign":
                 print("stop")
                 print(detected)
-                found_list.append("stop")
+                image_obstacles.append(1)
             elif category[0].category_name == "person":
                 print("stop, person")
                 print(detected)
-                found_list.append("person")
+                image_obstacles.append(2)
             elif category[0].category_name != "":
                 print(detected)
-                found_list.append("obstacle")
+                image_obstacles.append(3)
             else:
                 print(fps_text)
         # print(detection_result_list)
         detection_result_list.clear()
-        return found_list
 
 
-def main():
+def sensor_loop(direction):
+    """
+    Parameters:
+    - direction: left to right or right to left? 1 for left to right, -1 for right to left
+    """
     # Grab a pic, move into the loop for several
     image_obstacles = []
     im = picam2.capture_array()
@@ -189,12 +192,13 @@ def main():
     mp_image = mp.Image(image_format=mp.ImageFormat.SRGB, data=rgb_image)
 
     # Run object detection using the model.
-    image_obstacles.append(detector.detect_async(mp_image, time.time_ns() // 1_000_000))
+    detector.detect_async(mp_image, time.time_ns() // 1_000_000)
     # Show the FPS
     fps_text = 'FPS = {:.1f}'.format(FPS)
     detection_results(fps_text)
+
     # Loop through the Minimum angle and maximum angle with the specified Angle Step Size
-    for theta in range(MIN_ANGLE, MAX_ANGLE, ANGLE_STEP_SIZE):
+    for theta in range(direction * MIN_ANGLE, direction * (MAX_ANGLE + 1), direction * ANGLE_STEP_SIZE):
     	# Get the reading at the angle
     	dist = fc.get_distance_at(theta)
     	print(f"Angle: {theta}, Distance: {dist}")
@@ -206,14 +210,20 @@ def main():
     GRID[CENTER_X, CENTER_Y] = 2
     tranformed_grid = np.rot90(GRID)
     #plt.imsave("mapping.png", tranformed_grid)
+    # if direction == 1:
+    #     plt.imsave("mapping.png", tranformed_grid)
+    # else:
+    #     plt.imsave("mapping_reverse.png", tranformed_grid)
 
     # Reset after completing a scan
     global PREV_X, PREV_Y, PREV_DIST, PREV_THETA
     PREV_X, PREV_Y = None, None
     PREV_DIST, PREV_THETA = None, None
+    print(image_obstacles)
 
 if __name__ == "__main__":
-	try:
-		main()
-	finally:
+    try:
+        sensor_loop(1)
+        sensor_loop(-1)
+    finally:
 		fc.stop()
