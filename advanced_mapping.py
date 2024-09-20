@@ -1,6 +1,8 @@
 import numpy as np
+import matplotlib.pyplot as plt
 import time
 import picar_4wd as fc
+
 
 # Recommendation 1: The car is in middle of grid of X-direction, and 0 y-direction
 # Recommendation 2: Experiment at 5 degree increments (-60, -55, -50)
@@ -105,6 +107,11 @@ def main():
     	# Convert the angle to radians before passing to function
     	advanced_mapping(np.radians(theta), dist, theta)
     	time.sleep(0.1)
+         
+    # Image processsing
+    GRID[CENTER_X, CENTER_Y] = 2
+    tranformed_grid = np.rot90(GRID)
+    #plt.imsave("mapping.png", tranformed_grid)
 
     # Reset after completing a scan
     global PREV_X, PREV_Y, PREV_DIST, PREV_THETA
