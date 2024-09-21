@@ -9,6 +9,7 @@ sys.modules['picar_4wd'] = mock_picar_4wd
 
 import advanced_mapping
 
+
 class TestAdvancedMapping(unittest.TestCase):
 
     def setUp(self):
@@ -77,6 +78,7 @@ class TestAdvancedMapping(unittest.TestCase):
         for (x, y) in line_points:
             self.assertTrue(0 <= x < advanced_mapping.GRID_SIZE[0])
             self.assertTrue(0 <= y < advanced_mapping.GRID_SIZE[1])
+
 
 if __name__ == '__main__':
     unittest.main()

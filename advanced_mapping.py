@@ -11,220 +11,215 @@ from mediapipe.tasks.python import vision
 from utils import visualize
 from picamera2 import Picamera2
 
-# Global variables to calculate FPS
-COUNTER, FPS = 0, 0
-START_TIME = time.time()
-picam2 = Picamera2()
-picam2.preview_configuration.main.size = (640,480)
-picam2.preview_configuration.main.format = "RGB888"
-picam2.preview_configuration.align()
-picam2.configure("preview")
-picam2.start()
 
 # Recommendation 1: The car is in middle of grid of X-direction, and 0 y-direction
 # Recommendation 2: Experiment at 5 degree increments (-60, -55, -50)
-
-GRID_SIZE = (100, 100)
-GRID = np.zeros(GRID_SIZE)
-# Based on recommendation 1
-CENTER_X, CENTER_Y = 49, 0
-# TO BE USED FOR GRID INTERPOLATION
-PREV_X, PREV_Y = None, None
-# Ultrasonic Sensor Parameters
-MIN_ANGLE, MAX_ANGLE = -60, 61
-# Based on recommendation 2
-ANGLE_STEP_SIZE = 5
-
-# Set interpolate thresholds
-MAX_DIST_DIFF = 10
-MAX_ANGLE_DIFF = 10
-
-
-# Visualization parameters
-row_size = 50  # pixels
-left_margin = 24  # pixels
-text_color = (0, 0, 0)  # black
-font_size = 1
-font_thickness = 1
-fps_avg_frame_count = 10
-
-detection_frame = None
-detection_result_list = []
-
-model = 'efficientdet_lite0.tflite'
-score_threshold = 0.25
-max_results = 5
-image_obstacles = []
-
-
-def save_result(result: vision.ObjectDetectorResult, unused_output_image: mp.Image, timestamp_ms: int):
-    global FPS, COUNTER, START_TIME
-
-    # Calculate the FPS
-    if COUNTER % fps_avg_frame_count == 0:
-        FPS = fps_avg_frame_count / (time.time() - START_TIME)
+class AdvancedMapping4WD:
+    def __init__(self):
+        # Global variables to calculate FPS
+        COUNTER, FPS = 0, 0
         START_TIME = time.time()
+        self.picam2 = Picamera2()
+        self.picam2.preview_configuration.main.size = (640, 480)
+        self.picam2.preview_configuration.main.format = "RGB888"
+        self.picam2.preview_configuration.align()
+        self.picam2.configure("preview")
+        self.picam2.start()
 
-    detection_result_list.append(result)
-    COUNTER += 1
+        self.GRID_SIZE = (100, 100)
+        self.GRID = np.zeros(self.GRID_SIZE)
+        # Based on recommendation 1
+        self.CENTER_X, self.CENTER_Y = 49, 0
+        # TO BE USED FOR GRID INTERPOLATION
+        self.PREV_X, self.PREV_Y = None, None
+        # Ultrasonic Sensor Parameters
+        self.MIN_ANGLE, self.MAX_ANGLE = -60, 60
+        self.MIN_ANGLE_CAM, self.MAX_ANGLE_CAM = -15, 15
+        # keeping it high to start as the picarx has a bit more stuff on the servo
+        self.ANGLE_STEP_SIZE = 5
+        self.PREV_DIST, self.PREV_THETA = None, None
 
+        # Set interpolate thresholds
+        self.MAX_DIST_DIFF = 10
+        self.MAX_ANGLE_DIFF = 10
 
-# Initialize the object detection model
-base_options = python.BaseOptions(model_asset_path=model)
-options = vision.ObjectDetectorOptions(base_options=base_options,
-                                       running_mode=vision.RunningMode.LIVE_STREAM,
-                                       max_results=max_results, score_threshold=score_threshold,
-                                       result_callback=save_result)
-detector = vision.ObjectDetector.create_from_options(options)
+        # Visualization parameters
+        self.row_size = 50  # pixels
+        self.left_margin = 24  # pixels
+        self.text_color = (0, 0, 0)  # black
+        self.font_size = 1
+        self.font_thickness = 1
+        self.fps_avg_frame_count = 10
 
+        self.detection_frame = None
+        self.detection_result_list = []
 
-def interpolate_line(x0, y0, x1, y1):
-    """Interpolates the line between two points in the grid."""
-    
-    points = []
-    
-    delta_x = abs(x1 - x0)
-    delta_y = abs(y1 - y0)
-    step_x = 1 if x0 < x1 else -1
-    step_y = 1 if y0 < y1 else -1
-    error = delta_x - delta_y
-    
-    while (x0 != x1 or y0 != y1):
-        points.append((x0, y0))
-        error2 = 2 * error
-        if error2 > -delta_y:
-            error -= delta_y
-            x0 += step_x
-        if error2 < delta_x:
-            error += delta_x
-            y0 += step_y
-    
-    points.append((x1, y1))
-    
-    return points
+        self.model = 'efficientdet_lite0.tflite'
+        self.score_threshold = 0.30
+        self.max_results = 5
+        self.image_obstacles = []
+        # Initialize the object detection model
+        self.base_options = python.BaseOptions(model_asset_path=self.model)
+        self.options = vision.ObjectDetectorOptions(base_options=self.base_options,
+                                                    running_mode=vision.RunningMode.LIVE_STREAM,
+                                                    max_results=self.max_results, score_threshold=self.score_threshold,
+                                                    result_callback=self.save_result)
+        self.detector = vision.ObjectDetector.create_from_options(self.options)
+        self.FPS = 0
+        self.COUNTER = 0
+        self.START_TIME = 0
 
-def advanced_mapping(theta_rad: int, dist: int, theta_deg: int):
-    """
-    Function to convert sensor readings into Cartesian
-    coordiate grid.	Performs interpolation of grid cells
-    between readings.
+    def reset_grid(self):
+        self.GRID = np.zeros(self.GRID_SIZE)
+        self.image_obstacles = []
 
-    Parameters
-    ==========
-    theta_rad : int
-    	The angle (in radians) used by the ultrasonic
-        sensor for the reading.
+    def save_result(self, result: vision.ObjectDetectorResult, unused_output_image: mp.Image, timestamp_ms: int):
+        # Calculate the FPS
+        if self.COUNTER % self.fps_avg_frame_count == 0:
+            self.FPS = self.fps_avg_frame_count / (time.time() - self.START_TIME)
+            self.START_TIME = time.time()
 
-    dist : int
-    	The distance (cm) to the detected object at
-        the input angle.
+        self.detection_result_list.append(result)
+        self.COUNTER += 1
 
-    theta_deg : int
-        The angle (in degrees) used by the ultrasonic
-        sensor for the reading.
+    def interpolate_line(self, x0, y0, x1, y1):
+        """Interpolates the line between two points in the grid."""
 
-    Returns
-    =======
-    None
+        points = []
 
-    """
-    global PREV_X, PREV_Y, PREV_DIST, PREV_THETA
-    
-    X_position = CENTER_X + int(dist*np.sin(theta_rad))
-    Y_position = CENTER_Y + int(dist*np.cos(theta_rad))
+        delta_x = abs(x1 - x0)
+        delta_y = abs(y1 - y0)
+        step_x = 1 if x0 < x1 else -1
+        step_y = 1 if y0 < y1 else -1
+        error = delta_x - delta_y
 
-    print(f"Updating grid at X={X_position}, Y={Y_position}, Distance={dist}, Theta={theta_rad}")
+        while x0 != x1 or y0 != y1:
+            points.append((x0, y0))
+            error2 = 2 * error
+            if error2 > -delta_y:
+                error -= delta_y
+                x0 += step_x
+            if error2 < delta_x:
+                error += delta_x
+                y0 += step_y
 
-    # New: Check if reading is within bounds of GRID
-    if 0 <= X_position < GRID_SIZE[0] and 0 <= Y_position < GRID_SIZE[1]:
-        GRID[X_position, Y_position] = 1
-        # New: Add code for interpolation
-        if PREV_X is not None and PREV_Y is not None:
-            dist_diff = abs(dist - PREV_DIST)
-            angle_diff = abs(theta_deg - PREV_THETA)
+        points.append((x1, y1))
 
-            if dist_diff <= MAX_DIST_DIFF and angle_diff <= MAX_ANGLE_DIFF:
-            	line_points = interpolate_line(PREV_X, PREV_Y, X_position, Y_position)
-            	for (x, y) in line_points:
-            		if 0 <= x < GRID_SIZE[0] and 0 <= y < GRID_SIZE[1]:
-            			GRID[x, y] = 1
+        return points
 
-        PREV_X, PREV_Y = X_position, Y_position
-        PREV_DIST, PREV_THETA = dist, theta_deg
+    def advanced_mapping(self, theta_rad: int, dist: int, theta_deg: int):
+        """
+        Function to convert sensor readings into Cartesian
+        coordiate grid.	Performs interpolation of grid cells
+        between readings.
 
+        Parameters
+        ==========
+        theta_rad : int
+            The angle (in radians) used by the ultrasonic
+            sensor for the reading.
 
-def detection_results(fps_text):
-    if detection_result_list:
-        detected_list = detection_result_list[0].detections
-        for detected in detected_list:
-            category = detected.categories
-            category_found = category[0].category_name
-            if category_found == "stop sign":
-                print("stop")
-                print(detected)
-                image_obstacles.append(1)
-            elif category_found == "person":
-                print("stop, person")
-                print(detected)
-                image_obstacles.append(2)
-            elif category_found != "":
-                print(detected)
-                image_obstacles.append(3)
-            else:
-                print(fps_text)
-        # print(detection_result_list)
-        detection_result_list.clear()
+        dist : int
+            The distance (cm) to the detected object at
+            the input angle.
 
+        theta_deg : int
+            The angle (in degrees) used by the ultrasonic
+            sensor for the reading.
 
-def sensor_loop(direction):
-    """
-    Parameters:
-    - direction: left to right or right to left? 1 for left to right, -1 for right to left
-    """
-    # Grab a pic, move into the loop for several
-    image_obstacles = []
-    im = picam2.capture_array()
-    #    success, image = cap.read()
-    image = cv2.resize(im, (640, 480))
-    image = cv2.flip(image, -1)
+        Returns
+        =======
+        None
 
-    # Convert the image from BGR to RGB as required by the TFLite model.
-    rgb_image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
-    mp_image = mp.Image(image_format=mp.ImageFormat.SRGB, data=rgb_image)
+        """
 
-    # Run object detection using the model.
-    detector.detect_async(mp_image, time.time_ns() // 1_000_000)
-    # Show the FPS
-    fps_text = 'FPS = {:.1f}'.format(FPS)
-    detection_results(fps_text)
+        X_position = self.CENTER_X + int(dist * np.sin(theta_rad))
+        Y_position = self.CENTER_Y + int(dist * np.cos(theta_rad))
 
-    # Loop through the Minimum angle and maximum angle with the specified Angle Step Size
-    for theta in range(direction * MIN_ANGLE, direction * (MAX_ANGLE + 1), direction * ANGLE_STEP_SIZE):
-    	# Get the reading at the angle
-    	dist = fc.get_distance_at(theta)
-    	print(f"Angle: {theta}, Distance: {dist}")
-    	# Convert the angle to radians before passing to function
-    	advanced_mapping(np.radians(theta), dist, theta)
-    	time.sleep(0.1)
-         
-    # Image processsing
-    GRID[CENTER_X, CENTER_Y] = 2
-    tranformed_grid = np.rot90(GRID)
-    #plt.imsave("mapping.png", tranformed_grid)
-    # if direction == 1:
-    #     plt.imsave("mapping.png", tranformed_grid)
-    # else:
-    #     plt.imsave("mapping_reverse.png", tranformed_grid)
+        print(f"Updating grid at X={X_position}, Y={Y_position}, Distance={dist}, Theta={theta_rad}")
 
-    # Reset after completing a scan
-    global PREV_X, PREV_Y, PREV_DIST, PREV_THETA
-    PREV_X, PREV_Y = None, None
-    PREV_DIST, PREV_THETA = None, None
-    print(image_obstacles)
+        # New: Check if reading is within bounds of GRID
+        if 0 <= X_position < self.GRID_SIZE[0] and 0 <= Y_position < self.GRID_SIZE[1]:
+            self.GRID[X_position, Y_position] = 1
+            # New: Add code for interpolation
+            if self.PREV_X is not None and self.PREV_Y is not None:
+                dist_diff = abs(dist - self.PREV_DIST)
+                angle_diff = abs(theta_deg - self.PREV_THETA)
 
-if __name__ == "__main__":
-    try:
-        sensor_loop(1)
-        sensor_loop(-1)
-    finally:
-		fc.stop()
+                if dist_diff <= self.MAX_DIST_DIFF and angle_diff <= self.MAX_ANGLE_DIFF:
+                    line_points = self.interpolate_line(self.PREV_X, self.PREV_Y, X_position, Y_position)
+                    for (x, y) in line_points:
+                        if 0 <= x < self.GRID_SIZE[0] and 0 <= y < self.GRID_SIZE[1]:
+                            self.GRID[x, y] = 1
+
+            self.PREV_X, self.PREV_Y = X_position, Y_position
+            self.PREV_DIST, self.PREV_THETA = dist, theta_deg
+
+    def detection_results(self, fps_text):
+        if self.detection_result_list:
+            detected_list = self.detection_result_list[0].detections
+            for detected in detected_list:
+                category = detected.categories
+                category_found = category[0].category_name
+                if category_found == "stop sign":
+                    print("stop")
+                    print(detected)
+                    self.image_obstacles.append(1)
+                elif category_found == "person" or category_found == "potted plant":
+                    print("stop, person")
+                    print(detected)
+                    self.image_obstacles.append(2)
+                    if category_found == "potted plant":
+                        print("plant staff fun")
+                elif category_found != "":
+                    print(detected)
+                    self.image_obstacles.append(3)
+                else:
+                    print(fps_text)
+            # print(detection_result_list)
+            self.detection_result_list.clear()
+
+    def sensor_loop(self, direction):
+        """
+        Parameters:
+        - direction: left to right or right to left? 1 for left to right, -1 for right to left
+        """
+        # Loop through the Minimum angle and maximum angle with the specified Angle Step Size
+        for theta in range(direction * self.MIN_ANGLE, direction * (self.MAX_ANGLE + 1),
+                           direction * self.ANGLE_STEP_SIZE):
+            # Get the reading at the angle
+            dist = fc.get_distance_at(theta)
+            print(f"Angle: {theta}, Distance: {dist}")
+            # Convert the angle to radians before passing to function
+            self.advanced_mapping(np.radians(theta), dist, theta)
+            if self.MIN_ANGLE_CAM < theta < self.MAX_ANGLE_CAM:
+                im = self.picam2.capture_array()
+                #    success, image = cap.read()
+                image = cv2.resize(im, (640, 480))
+                image = cv2.flip(image, -1)
+
+                # Convert the image from BGR to RGB as required by the TFLite model.
+                rgb_image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+                mp_image = mp.Image(image_format=mp.ImageFormat.SRGB, data=rgb_image)
+
+                # Run object detection using the model.
+                self.detector.detect_async(mp_image, time.time_ns() // 1_000_000)
+                # Show the FPS
+                fps_text = 'FPS = {:.1f}'.format(self.FPS)
+                self.detection_results(fps_text)
+            time.sleep(0.1)
+
+        # Image processsing
+        self.GRID[self.CENTER_X, self.CENTER_Y] = 2
+        transformed_grid = np.rot90(self.GRID)
+        # if direction == 1:
+        #     plt.imsave("mapping.png", transformed_grid)
+        # else:
+        #     plt.imsave("mapping_reverse.png", transformed_grid)
+        map_name = "map/mapping" + str(self.COUNTER) + ".png"
+        plt.imsave(map_name, transformed_grid)
+        # Reset after completing a scan
+        self.PREV_X, self.PREV_Y = None, None
+        self.PREV_DIST, self.PREV_THETA = None, None
+        print(self.image_obstacles)
+        return transformed_grid, self.image_obstacles
