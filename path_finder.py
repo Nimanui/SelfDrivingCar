@@ -176,7 +176,7 @@ class PathFinder:
         ax.set_xlabel('Y-axis')
         ax.set_ylabel('X-axis')
         ax.grid(True, which='both', color='lightgrey', linestyle='-', linewidth=0.5)
-        filename = "AStar/AStarMap" + self.count + ".png"
+        filename = "AStar/AStarMap" + str(self.count) + ".png"
         plt.savefig(filename)
         # plt.show()
         self.count += 1
