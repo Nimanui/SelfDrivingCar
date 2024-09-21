@@ -17,7 +17,7 @@ class PathFinder:
         - scale_factor: scale down the grid by n factor
         """
         self.grid = self.scale_down_grid(grid, scale_factor)
-
+        print(self.grid.shape)
         self.car_size = car_size
         self.graph = self._grid_to_graph(grid)
         self.image_obstacles = image_obstacles

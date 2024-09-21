@@ -105,12 +105,12 @@ class TestPathFinder(unittest.TestCase):
     def test_scale_down_grid(self):
         """Test scaling down the grid with a scale factor of 2."""
 
-        grid = np.zeros((20, 20), dtype=int)
+        grid = np.zeros((100, 100), dtype=int)
         grid[10, 10] = 1
         grid[11, 10] = 1
 
         # pathfinder with a scale factor of 2
-        pathfinder = PathFinder(grid, self.image_obstacles, car_size=1, scale_factor=2)
+        pathfinder = PathFinder(grid, self.image_obstacles, car_size=1, scale_factor=4)
 
         # Start and goal sin new smaller grid size
         start = (0, 0)
