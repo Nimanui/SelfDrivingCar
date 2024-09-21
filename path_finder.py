@@ -20,6 +20,7 @@ class PathFinder:
         self.car_size = car_size
         self.graph = self._grid_to_graph(grid_in)
         self.image_obstacles = image_obstacles
+        self.count = 0
 
     def scale_down_grid(self, grid, scale_factor):
         """
@@ -127,10 +128,10 @@ class PathFinder:
             delta_column = next_position[1] - current_position[1]
 
             # Determine the direction
-            if delta_column == 1 and delta_row == 0:
+            if delta_column == -1 and delta_row == 0:
                 # done
                 commands.append("right")
-            elif delta_column == -1 and delta_row == 0:
+            elif delta_column == 1 and delta_row == 0:
                 # done
                 commands.append("left")
             elif delta_column == 0 and delta_row == 1:
@@ -175,7 +176,10 @@ class PathFinder:
         ax.set_xlabel('Y-axis')
         ax.set_ylabel('X-axis')
         ax.grid(True, which='both', color='lightgrey', linestyle='-', linewidth=0.5)
-        plt.show()
+        filename = "AStar/AStarMap" + self.count + ".png"
+        plt.savefig(filename)
+        # plt.show()
+        self.count += 1
 
 
 '''
