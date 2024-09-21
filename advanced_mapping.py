@@ -158,15 +158,16 @@ def detection_results(fps_text):
         detected_list = detection_result_list[0].detections
         for detected in detected_list:
             category = detected.categories
-            if category[0].category_name == "stop sign":
+            category_found = category[0].category_name
+            if category_found == "stop sign":
                 print("stop")
                 print(detected)
                 image_obstacles.append(1)
-            elif category[0].category_name == "person":
+            elif category_found == "person":
                 print("stop, person")
                 print(detected)
                 image_obstacles.append(2)
-            elif category[0].category_name != "":
+            elif category_found != "":
                 print(detected)
                 image_obstacles.append(3)
             else:

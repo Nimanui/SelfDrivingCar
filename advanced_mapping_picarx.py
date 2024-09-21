@@ -61,7 +61,7 @@ class AdvancedMapping:
         self.detection_result_list = []
 
         self.model = 'efficientdet_lite0.tflite'
-        self.score_threshold = 0.40
+        self.score_threshold = 0.30
         self.max_results = 5
         self.image_obstacles = []
         # Initialize the object detection model
@@ -77,6 +77,7 @@ class AdvancedMapping:
 
     def reset_grid(self):
         self.GRID = np.zeros(self.GRID_SIZE)
+        self.image_obstacles = []
 
     def save_result(self, result: vision.ObjectDetectorResult, unused_output_image: mp.Image, timestamp_ms: int):
         # Calculate the FPS
@@ -165,15 +166,18 @@ class AdvancedMapping:
             detected_list = self.detection_result_list[0].detections
             for detected in detected_list:
                 category = detected.categories
-                if category[0].category_name == "stop sign":
+                category_found = category[0].category_name
+                if category_found == "stop sign":
                     print("stop")
                     print(detected)
                     self.image_obstacles.append(1)
-                elif category[0].category_name == "person":
+                elif category_found == "person" or category_found == "potted plant":
                     print("stop, person")
                     print(detected)
                     self.image_obstacles.append(2)
-                elif category[0].category_name != "":
+                    if category_found == "potted plant":
+                        print("plant staff fun")
+                elif category_found != "":
                     print(detected)
                     self.image_obstacles.append(3)
                 else:
@@ -215,10 +219,12 @@ class AdvancedMapping:
         # Image processsing
         self.GRID[self.CENTER_X, self.CENTER_Y] = 2
         transformed_grid = np.rot90(self.GRID)
-        if direction == 1:
-            plt.imsave("mapping.png", transformed_grid)
-        else:
-            plt.imsave("mapping_reverse.png", transformed_grid)
+        # if direction == 1:
+        #     plt.imsave("mapping.png", transformed_grid)
+        # else:
+        #     plt.imsave("mapping_reverse.png", transformed_grid)
+        map_name = "map/mapping" + str(self.COUNTER) + ".png"
+        plt.imsave(map_name, transformed_grid)
         # Reset after completing a scan
         self.PREV_X, self.PREV_Y = None, None
         self.PREV_DIST, self.PREV_THETA = None, None
