@@ -103,7 +103,7 @@ class PathFinder:
 
     def visualize_grid(self, path=None):
         fig, ax = plt.subplots(figsize=(8, 8))
-        ax.imshow(self.grid, cmap='Greys', origin='upper')
+        # ax.imshow(self.grid, cmap='Greys', origin='upper')
 
         # Plot obstacles
         obstacles = np.argwhere(self.grid == 1)
@@ -135,7 +135,8 @@ class PathFinder:
         ax.set_xlabel('Y-axis')
         ax.set_ylabel('X-axis')
         ax.grid(True, which='both', color='lightgrey', linestyle='-', linewidth=0.5)
-        plt.show()
+        # plt.show()
+        plt.savefig("aStarMap.png")
 
 
 '''
