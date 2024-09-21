@@ -2,10 +2,11 @@ import numpy as np
 import networkx as nx
 import matplotlib.pyplot as plt
 import matplotlib.patches as patches
+from scipy.ndimage import zoom
 import time
 
 class PathFinder:
-    def __init__(self, grid, image_obstacles, car_size=1):
+    def __init__(self, grid, image_obstacles, car_size=1, scale_factor=1):
         """
         Initialize with the grid and car size.
 
@@ -13,11 +14,48 @@ class PathFinder:
         - grid: 2D numpy array (0 = free space, 1 = obstacle)
         - image_obstacles: number list (1 = stop sign, 2 = person, 3 = obstacle)
         - car_size: size of the car in grid cells (default 1)
+        - scale_factor: scale down the grid by n factor
         """
-        self.grid = grid
+        self.grid = self.scale_down_grid(grid, scale_factor)
+        print(self.grid.shape)
         self.car_size = car_size
         self.graph = self._grid_to_graph(grid)
         self.image_obstacles = image_obstacles
+
+    def scale_down_grid(self, grid, scale_factor):
+        """
+        Helper function to scale down the grid and relocate obstacles.
+
+        Parameters:
+        - grid: Original 2D numpy array
+        - scale_factor: Factor by which to scale down the grid
+
+        Returns:
+        - Scaled down grid with relocated obstacles
+        """
+        if scale_factor == 1:
+            # No scaling
+            return grid
+
+        # capture obstacle positions
+        original_shape = grid.shape
+        # get all obstacles
+        obstacles = np.argwhere(grid == 1)
+
+        # Scale the grid dimensions
+        new_shape = (int(original_shape[0] / scale_factor), int(original_shape[1] / scale_factor))
+        # New scaled-down grid with zeros
+        scaled_grid = np.zeros(new_shape, dtype=int)
+
+        # Relocate obstacles
+        for (x, y) in obstacles:
+            new_x = int(x / scale_factor)
+            new_y = int(y / scale_factor)
+            # Ensure we don't go out of bounds
+            if new_x < new_shape[0] and new_y < new_shape[1]:
+                scaled_grid[new_x, new_y] = 1
+
+        return scaled_grid
 
     def _grid_to_graph(self, grid):
         """
@@ -91,13 +129,16 @@ class PathFinder:
 
             # Determine the direction
             if delta_column == 1 and delta_row == 0:
-                commands.append("forward")
-            elif delta_column == -1 and delta_row == 0:
-                commands.append("backward")
-            elif delta_column == 0 and delta_row == 1:
+                # done
                 commands.append("right")
+            elif delta_column == -1 and delta_row == 0:
+                # done
+                commands.append("right")
+            elif delta_column == 0 and delta_row == 1:
+                commands.append("backward")
             elif delta_column == 0 and delta_row == -1:
-                commands.append("left")
+                # done
+                commands.append("forward")
 
         return commands
 

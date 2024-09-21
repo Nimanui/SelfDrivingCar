@@ -42,7 +42,7 @@ class TestPathFinder(unittest.TestCase):
         goal = (2, 2)
         path = pathfinder.find_path(start, goal)
         commands = pathfinder.path_to_commands(path)
-        self.assertEqual(commands, ['right', 'right', 'forward', 'forward'],
+        self.assertEqual(commands, ['backward', 'backward', 'right', 'right'],
                          "Error: Validate the generated commands")
 
     def test_path_around_obstacles(self):
@@ -62,7 +62,7 @@ class TestPathFinder(unittest.TestCase):
         goal = (2, 2)
         path = pathfinder.find_path(start, goal)
         commands = pathfinder.path_to_commands(path)
-        self.assertEqual(commands, ['person', 'stop', 'right', 'right', 'forward', 'forward'],
+        self.assertEqual(commands,  ['person', 'stop', 'backward', 'backward', 'right', 'right'],
                          "Error: Validate the generated commands")
 
     def test_car_size1(self):
@@ -100,7 +100,38 @@ class TestPathFinder(unittest.TestCase):
         path = pathfinder.find_path(start, goal)
         self.assertIsNotNone(path, "Error: Path should be found for car_size=2")
         # visual the grid
+        # pathfinder.visualize_grid(path)
+
+    def test_scale_down_grid(self):
+        """Test scaling down the grid with a scale factor of 2."""
+
+        grid = np.zeros((100, 100), dtype=int)
+        grid[70, 20] = 1
+        grid[70, 21] = 1
+        grid[70, 22] = 1
+        grid[70, 23] = 1
+        grid[70, 24] = 1
+        grid[70, 25] = 1
+        grid[70, 26] = 1
+        grid[70, 27] = 1
+
+        # pathfinder with a scale factor of 2
+        pathfinder = PathFinder(grid, self.image_obstacles, car_size=1, scale_factor=3)
+
+        # Start and goal sin new smaller grid size
+        start = (28, 8)
+        goal = (20, 9)
+
+        path = pathfinder.find_path(start, goal)
+        self.assertIsNotNone(path, "Error: Path should be found on the scaled-down grid.")
+
+        # validate the commands
+        commands = pathfinder.path_to_commands(path)
+        print('scaled path commands:', commands)
+
+        # visual the grid
         pathfinder.visualize_grid(path)
+
 
 
 if __name__ == '__main__':
