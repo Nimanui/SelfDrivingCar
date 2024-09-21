@@ -1,25 +1,27 @@
 import numpy as np
 import networkx as nx
+import matplotlib.pyplot as plt
+import matplotlib.patches as patches
 import time
 
-
 class PathFinder:
-    def __init__(self, grid, image_obstacles):
+    def __init__(self, grid, image_obstacles, car_size=1):
         """
-        Initialize with the grid.
+        Initialize with the grid and car size.
 
         Parameters:
         - grid: 2D numpy array (0 = free space, 1 = obstacle)
         - image_obstacles: number list (1 = stop sign, 2 = person, 3 = obstacle)
+        - car_size: size of the car in grid cells (default 1)
         """
         self.grid = grid
+        self.car_size = car_size
         self.graph = self._grid_to_graph(grid)
         self.image_obstacles = image_obstacles
 
-
     def _grid_to_graph(self, grid):
         """
-        Convert the grid to networkx graph.
+        Convert the grid to networkx graph, considering the car size.
 
         Parameters:
         - grid: 2D numpy array
@@ -29,22 +31,26 @@ class PathFinder:
         """
         rows, cols = grid.shape
         G = nx.grid_2d_graph(rows, cols)
-        # obstacle nodes = 1
-        obstacles = [(i, j) for i in range(rows) for j in range(cols) if grid[i, j] == 1]
+
+        # Remove nodes where the car can't fit due to obstacles
+        obstacles = [(i, j) for i in range(rows) for j in range(cols)
+                     if not self._is_position_valid(i, j)]
         G.remove_nodes_from(obstacles)
         return G
 
+    def _is_position_valid(self, x, y):
+        """
+        Check if the car can occupy the position (x, y) without colliding with obstacles.
+        """
+        rows, cols = self.grid.shape
+        if x + self.car_size > rows or y + self.car_size > cols:
+            return False  # Car would be out of bounds
+        footprint = self.grid[x:x + self.car_size, y:y + self.car_size]
+        return not np.any(footprint == 1)
 
     def _heuristic(self, node1, node2):
         """
         Heuristic function for A* (Manhattan distance).
-
-        Parameters:
-        - node1: tuple (x1, y1)
-        - node2: tuple (x2, y2)
-
-        Returns:
-        - Heuristic distance between node1 and node2
         """
         x1, y1 = node1
         x2, y2 = node2
@@ -65,26 +71,13 @@ class PathFinder:
             path = nx.astar_path(self.graph, start, goal, heuristic=self._heuristic)
             return path
         except nx.NetworkXNoPath:
-            # print("No path found.")
             return None
-
 
     def path_to_commands(self, path):
         """
-        Convert a path tuples to movement commands.
-
-        Parameters:
-        - path: tuples representing the path
-
-        Returns:
-        - commands: list of commands ["left", "right", "forward", "backward"]
+        Convert a path of tuples to movement commands.
         """
         commands = []
-        print(self.image_obstacles)
-        if 2 in self.image_obstacles:
-            commands.append("person")
-        if 1 in self.image_obstacles:
-            commands.append("stop")
         for i in range(1, len(path)):
             current_position = path[i - 1]
             next_position = path[i]
@@ -103,6 +96,42 @@ class PathFinder:
                 commands.append("left")
 
         return commands
+
+    def visualize_grid(self, path=None):
+        fig, ax = plt.subplots(figsize=(8, 8))
+        ax.imshow(self.grid, cmap='Greys', origin='upper')
+
+        # Plot obstacles
+        obstacles = np.argwhere(self.grid == 1)
+        for (x, y) in obstacles:
+            rect = patches.Rectangle((y - 0.5, x - 0.5), 1, 1, linewidth=0, edgecolor=None, facecolor='black')
+            ax.add_patch(rect)
+
+        if path:
+            x_coords, y_coords = zip(*path)
+            ax.plot(y_coords, x_coords, color='blue', linewidth=2, label='Path')
+            ax.scatter(y_coords[0], x_coords[0], color='green', s=100, label='Start')
+            ax.scatter(y_coords[-1], x_coords[-1], color='red', s=100, label='Goal')
+            for (x, y) in path:
+                rect = patches.Rectangle((y - 0.5, x - 0.5), self.car_size, self.car_size,
+                                         linewidth=1, edgecolor='blue', facecolor='blue', alpha=0.3)
+                ax.add_patch(rect)
+
+        # Legend
+        legend_patches = [
+            patches.Patch(color='black', label='Obstacles'),
+            patches.Patch(color='blue', label='Path'),
+            patches.Patch(color='green', label='Start'),
+            patches.Patch(color='red', label='Goal'),
+            patches.Patch(color='blue', alpha=0.3, label=f'Car Footprint (size={self.car_size})')
+        ]
+        ax.legend(handles=legend_patches, loc='upper right')
+
+        ax.set_title("Grid with Obstacles and Path")
+        ax.set_xlabel('Y-axis')
+        ax.set_ylabel('X-axis')
+        ax.grid(True, which='both', color='lightgrey', linestyle='-', linewidth=0.5)
+        plt.show()
 
 
 '''
@@ -126,4 +155,3 @@ if path:
 else:
     print("No path found.")
 '''
-
