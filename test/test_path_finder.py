@@ -2,6 +2,7 @@ import unittest
 import numpy as np
 from path_finder import PathFinder
 
+
 class TestPathFinder(unittest.TestCase):
 
     def setUp(self):
@@ -11,7 +12,7 @@ class TestPathFinder(unittest.TestCase):
         self.grid[5, 5] = 1
         self.grid[6, 5] = 1
         # Example obstacle types
-        self.image_obstacles = [1, 2]
+        self.image_obstacles = []
 
     def test_path_exists(self):
         """Test if a path is found."""
@@ -53,6 +54,17 @@ class TestPathFinder(unittest.TestCase):
         for obstacle in [(4, 5), (5, 5), (6, 5)]:
             self.assertNotIn(obstacle, path, "Error: Path should avoid obstacles")
 
+    def test_commands_with_images(self):
+        """Test path converts to commands."""
+        image_obstacles_person = [1, 2]
+        pathfinder = PathFinder(self.grid, image_obstacles_person)
+        start = (0, 0)
+        goal = (2, 2)
+        path = pathfinder.find_path(start, goal)
+        commands = pathfinder.path_to_commands(path)
+        self.assertEqual(commands, ['person', 'stop', 'right', 'right', 'forward', 'forward'],
+                         "Error: Validate the generated commands")
+
     def test_car_size(self):
         """Test path with a larger car size."""
         pathfinder = PathFinder(self.grid, self.image_obstacles, car_size=2)
@@ -66,4 +78,3 @@ class TestPathFinder(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main()
-
