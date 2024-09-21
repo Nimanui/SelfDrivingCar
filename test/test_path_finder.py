@@ -65,11 +65,21 @@ class TestPathFinder(unittest.TestCase):
         self.assertEqual(commands, ['person', 'stop', 'right', 'right', 'forward', 'forward'],
                          "Error: Validate the generated commands")
 
-    def test_car_size(self):
+    def test_car_size1(self):
         """Test path with a larger car size."""
         pathfinder = PathFinder(self.grid, self.image_obstacles, car_size=2)
         start = (0, 0)
         goal = (8, 8)
+        path = pathfinder.find_path(start, goal)
+        self.assertIsNotNone(path, "Error: Path should be found for car_size=2")
+        # visual the grid
+        pathfinder.visualize_grid(path)
+
+    def test_car_size2(self):
+        """Test path with a larger car size."""
+        pathfinder = PathFinder(self.grid, self.image_obstacles, car_size=2)
+        start = (0, 0)
+        goal = (5, 8)
         path = pathfinder.find_path(start, goal)
         self.assertIsNotNone(path, "Error: Path should be found for car_size=2")
         # visual the grid
