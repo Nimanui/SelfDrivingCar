@@ -114,13 +114,14 @@ class TestPathFinder(unittest.TestCase):
         grid[70, 25] = 1
         grid[70, 26] = 1
         grid[70, 27] = 1
+        grid[70, 29] = 1
 
         # pathfinder with a scale factor of 2
-        pathfinder = PathFinder(grid, self.image_obstacles, car_size=1, scale_factor=3)
+        pathfinder = PathFinder(grid, self.image_obstacles, car_size=1, scale_factor=4)
 
         # Start and goal sin new smaller grid size
-        start = (28, 8)
-        goal = (20, 9)
+        start = (20, 6)
+        goal = (15, 6)
 
         path = pathfinder.find_path(start, goal)
         self.assertIsNotNone(path, "Error: Path should be found on the scaled-down grid.")
