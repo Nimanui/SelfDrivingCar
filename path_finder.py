@@ -78,6 +78,10 @@ class PathFinder:
         Convert a path of tuples to movement commands.
         """
         commands = []
+        if 2 in self.image_obstacles:
+            commands.append("person")
+        if 1 in self.image_obstacles:
+            commands.append("stop")
         for i in range(1, len(path)):
             current_position = path[i - 1]
             next_position = path[i]
