@@ -44,7 +44,7 @@ class PathFinder:
         """
         rows, cols = self.grid.shape
         if x + self.car_size > rows or y + self.car_size > cols:
-            return False  # Car would be out of bounds
+            return False  # Car out of bounds
         footprint = self.grid[x:x + self.car_size, y:y + self.car_size]
         return not np.any(footprint == 1)
 
