@@ -133,7 +133,7 @@ class PathFinder:
                 commands.append("right")
             elif delta_column == -1 and delta_row == 0:
                 # done
-                commands.append("right")
+                commands.append("left")
             elif delta_column == 0 and delta_row == 1:
                 commands.append("backward")
             elif delta_column == 0 and delta_row == -1:
