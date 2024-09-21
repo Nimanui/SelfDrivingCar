@@ -61,25 +61,24 @@ def read_command_picarx(px, command, start, goal):
         px.set_dir_servo_angle(0)
         px.backward(SPEED)
         time.sleep(TIME_PAUSE)
-        goal = (goal[0], goal[1] + 5)
+        goal = (goal[0], goal[1] - 1)
     elif command == "forward":
         px.set_dir_servo_angle(0)
         px.forward(SPEED)
         time.sleep(TIME_PAUSE)
-        start = (start[0], start[1] + 5)
+        start = (start[0], start[1] - 1)
     elif command == "left":
-        print("left")
         px.set_dir_servo_angle(-30)
         px.forward(SPEED*2)
         time.sleep(TIME_PAUSE * 4)
         px.set_dir_servo_angle(0)
-        start = (start[0] - 5, start[1])
+        start = (start[0] + 1, start[1])
     elif command == "right":
         px.set_dir_servo_angle(30)
         px.forward(SPEED*2)
         time.sleep(TIME_PAUSE * 4)
         px.set_dir_servo_angle(0)
-        start = (start[0] + 5, start[1])
+        start = (start[0] - 1, start[1])
     PERSON_PAUSE = False
     px.forward(0)
     return start, goal
@@ -89,8 +88,9 @@ if __name__ == "__main__":
     advMap = amp.AdvancedMappingPX()
     # advMap = amp.AdvancedMapping4WD()
     try:
-        start = (99, 49)
-        goal = (70, 49)
+        scale = 4
+        start = (int(99/scale), int(49/scale))
+        goal = (int(50/scale), int(49/scale))
         index = 0
         overall_step_max = 10
         command_steps = 3
@@ -100,9 +100,10 @@ if __name__ == "__main__":
             advMap.reset_grid()
             try:
                 grid, image_list = advMap.sensor_loop(1 - 2 * (index % 2))
-                pathfinder = pf.PathFinder(grid, image_list)
+                pathfinder = pf.PathFinder(grid, image_list, scale_factor=scale)
+                pathfinder.visualize_grid()
                 path = pathfinder.find_path(start, goal)
-                # pathfinder.visualize_grid(path)
+                pathfinder.visualize_grid(path)
                 # break
                 # follow a few steps in A*
                 if path:
