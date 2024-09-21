@@ -128,13 +128,16 @@ class PathFinder:
 
             # Determine the direction
             if delta_column == 1 and delta_row == 0:
-                commands.append("forward")
-            elif delta_column == -1 and delta_row == 0:
-                commands.append("backward")
-            elif delta_column == 0 and delta_row == 1:
+                # done
                 commands.append("right")
+            elif delta_column == -1 and delta_row == 0:
+                # done
+                commands.append("right")
+            elif delta_column == 0 and delta_row == 1:
+                commands.append("backward")
             elif delta_column == 0 and delta_row == -1:
-                commands.append("left")
+                # done
+                commands.append("forward")
 
         return commands
 
