@@ -65,7 +65,7 @@ class TestPathFinder(unittest.TestCase):
         self.assertEqual(commands, ['person', 'stop', 'right', 'right', 'forward', 'forward'],
                          "Error: Validate the generated commands")
 
-    def test_car_size(self):
+    def test_car_size1(self):
         """Test path with a larger car size."""
         pathfinder = PathFinder(self.grid, self.image_obstacles, car_size=2)
         start = (0, 0)
@@ -73,8 +73,54 @@ class TestPathFinder(unittest.TestCase):
         path = pathfinder.find_path(start, goal)
         self.assertIsNotNone(path, "Error: Path should be found for car_size=2")
         # visual the grid
-        pathfinder.visualize_grid(path)
+        # pathfinder.visualize_grid(path)
 
+    def test_car_size2(self):
+        """Test path with a larger car size."""
+        pathfinder = PathFinder(self.grid, self.image_obstacles, car_size=2)
+        start = (0, 0)
+        goal = (5, 8)
+        path = pathfinder.find_path(start, goal)
+        self.assertIsNotNone(path, "Error: Path should be found for car_size=2")
+        # visual the grid
+        # pathfinder.visualize_grid(path)
+
+    def test_car_size3(self):
+        """Test path with a larger car size."""
+
+        grid = np.zeros((10, 10), dtype=int)
+        grid[5, 4] = 1
+        grid[5, 5] = 1
+        grid[5, 6] = 1
+
+
+        pathfinder = PathFinder(grid, self.image_obstacles, car_size=2)
+        start = (8, 5)
+        goal = (0, 5)
+        path = pathfinder.find_path(start, goal)
+        self.assertIsNotNone(path, "Error: Path should be found for car_size=2")
+        # visual the grid
+        # pathfinder.visualize_grid(path)
+
+    def test_scale_down_grid(self):
+        """Test scaling down the grid with a scale factor of 2."""
+
+        grid = np.zeros((20, 20), dtype=int)
+        grid[10, 10] = 1
+        grid[11, 10] = 1
+
+        # pathfinder with a scale factor of 2
+        pathfinder = PathFinder(grid, self.image_obstacles, car_size=1, scale_factor=2)
+
+        # Start and goal sin new smaller grid size
+        start = (0, 0)
+        goal = (9, 9)
+
+        path = pathfinder.find_path(start, goal)
+        self.assertIsNotNone(path, "Error: Path should be found on the scaled-down grid.")
+
+        # visual the grid
+        pathfinder.visualize_grid(path)
 
 if __name__ == '__main__':
     unittest.main()
