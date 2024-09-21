@@ -6,8 +6,8 @@ import time
 
 PERSON_PAUSE = False
 SPEED = 5
-TIME_PAUSE = 0.2
-TIME_PAUSE_TURN = 0.6
+TIME_PAUSE = 0.3
+TIME_PAUSE_TURN = 0.7
 
 """
 ToDo: this function needs to be adjusted to move the 4WD picar which uses different functions
@@ -97,15 +97,17 @@ if __name__ == "__main__":
         overall_step_max = 10
         command_steps = 3
         distance = 5
+        count = 0
         while start != goal and index < overall_step_max:
             # rescan for a new path
             advMap.reset_grid()
             try:
                 grid, image_list = advMap.sensor_loop(1 - 2 * (index % 2))
-                pathfinder = pf.PathFinder(grid, image_list, scale_factor=scale)
+                pathfinder = pf.PathFinder(grid, image_list, scale_factor=scale, count=count)
                 pathfinder.visualize_grid()
                 path = pathfinder.find_path(start, goal)
                 pathfinder.visualize_grid(path)
+                count = pathfinder.count
                 # break
                 # follow a few steps in A*
                 if path:

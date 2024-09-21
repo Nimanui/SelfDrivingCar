@@ -6,7 +6,7 @@ from scipy.ndimage import zoom
 import time
 
 class PathFinder:
-    def __init__(self, grid_in, image_obstacles, car_size=1, scale_factor=1):
+    def __init__(self, grid_in, image_obstacles, car_size=1, scale_factor=1, count=0):
         """
         Initialize with the grid and car size.
 
@@ -18,9 +18,9 @@ class PathFinder:
         """
         self.grid = self.scale_down_grid(grid_in, scale_factor)
         self.car_size = car_size
-        self.graph = self._grid_to_graph(grid_in)
+        self.graph = self._grid_to_graph(self.grid)
         self.image_obstacles = image_obstacles
-        self.count = 0
+        self.count = count
 
     def scale_down_grid(self, grid, scale_factor):
         """
