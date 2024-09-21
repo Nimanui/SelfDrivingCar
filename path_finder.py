@@ -6,7 +6,7 @@ from scipy.ndimage import zoom
 import time
 
 class PathFinder:
-    def __init__(self, grid, image_obstacles, car_size=1, scale_factor=1):
+    def __init__(self, grid_in, image_obstacles, car_size=1, scale_factor=1):
         """
         Initialize with the grid and car size.
 
@@ -16,11 +16,11 @@ class PathFinder:
         - car_size: size of the car in grid cells (default 1)
         - scale_factor: scale down the grid by n factor
         """
-        self.grid = self.scale_down_grid(grid, scale_factor)
-
+        self.grid = self.scale_down_grid(grid_in, scale_factor)
         self.car_size = car_size
-        self.graph = self._grid_to_graph(grid)
+        self.graph = self._grid_to_graph(grid_in)
         self.image_obstacles = image_obstacles
+        self.count = 0
 
     def scale_down_grid(self, grid, scale_factor):
         """
@@ -54,7 +54,6 @@ class PathFinder:
             # Ensure we don't go out of bounds
             if new_x < new_shape[0] and new_y < new_shape[1]:
                 scaled_grid[new_x, new_y] = 1
-
         return scaled_grid
 
     def _grid_to_graph(self, grid):
@@ -132,17 +131,16 @@ class PathFinder:
                 commands.append("forward")
             elif delta_column == -1 and delta_row == 0:
                 commands.append("backward")
-            elif delta_column == 0 and delta_row == 1:
-                commands.append("right")
             elif delta_column == 0 and delta_row == -1:
+                commands.append("right")
+            elif delta_column == 0 and delta_row == 1:
                 commands.append("left")
 
         return commands
 
     def visualize_grid(self, path=None):
         fig, ax = plt.subplots(figsize=(8, 8))
-        # ax.imshow(self.grid, cmap='Greys', origin='upper')
-
+        ax.imshow(self.grid, cmap='Greys', origin='upper')
         # Plot obstacles
         obstacles = np.argwhere(self.grid == 1)
         for (x, y) in obstacles:
@@ -174,7 +172,9 @@ class PathFinder:
         ax.set_ylabel('X-axis')
         ax.grid(True, which='both', color='lightgrey', linestyle='-', linewidth=0.5)
         # plt.show()
-        plt.savefig("aStarMap.png")
+        filename = "AStar/AStarMap" + str(self.count) + ".png"
+        plt.savefig(filename)
+        self.count += 1
 
 
 '''
