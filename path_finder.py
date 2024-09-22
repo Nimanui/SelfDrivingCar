@@ -5,6 +5,7 @@ import matplotlib.patches as patches
 from scipy.ndimage import zoom
 import time
 
+
 class PathFinder:
     def __init__(self, grid_in, goal, car_size=1, scale_factor=1):
         """
@@ -23,6 +24,7 @@ class PathFinder:
         self.car_size = car_size
         # self.add_obstacles(obstacle_map=obstacles, current_location=start, orientation=0)
         self.graph = self._grid_to_graph(self.grid)
+        self.scale_factor = scale_factor
         # self.image_obstacles = image_obstacles
         self.count = 0
         self.direction = 0
@@ -40,10 +42,44 @@ class PathFinder:
         """
         scaled_map = self.scale_down_grid(obstacle_map, self.scale_factor)
         rotated_map = self.rotate_to_orientation(scaled_map, orientation)
-        pada, padb, padc, padd = self.get_padding_relative_to_orientation(current_location, rotated_map.shape, self.grid.shape, orientation)
-        padded_map = np.pad(rotated_map, ((padd, padb), (padc, pada)), 'constant', constant_values=0)
+        print("add_obstacles")
+        print(self.grid.shape)
+        print(rotated_map.shape)
+        print(current_location)
+        pada, padb, padc, padd = self.get_padding_relative_to_orientation(current_location,
+                                                                          rotated_map.shape,
+                                                                          self.grid.shape,
+                                                                          orientation)
+        print("found padding a: " + str(pada) + " b: " + str(padb) + " c: " + str(padc) + " d: " + str(padd))
+        # padded_map = np.pad(rotated_map, ((padd, padb), (padc, pada)), 'constant', constant_values=0)
+        padded_map = self.pad_map(pada, padb, padc, padd, rotated_map, self.grid)
         self.grid = np.add(self.grid, padded_map)
+        self.graph = self._grid_to_graph(self.grid)
 
+    def pad_map(self, pada, padb, padc, padd, map, big_map):
+        big_map_shape = big_map.shape
+        pad_tuple = [[0, 0], [0, 0]]
+        trim_tuple = [[0, big_map_shape[0]], [0, big_map_shape[1]]]
+        if pada > 0:
+            pad_tuple[1][1] = pada
+        # else:
+        #     trim_tuple[1][1] = big_map_shape[1] - abs(pada)
+        if padb > 0:
+            pad_tuple[0][1] = padb
+        # else:
+        #     trim_tuple[0][1] = big_map_shape[0] - abs(padb)
+        if padc > 0:
+            pad_tuple[1][0] = padc
+        else:
+            trim_tuple[1][0] = abs(padc)
+        if padd > 0:
+            pad_tuple[0][0] = padd
+        else:
+            trim_tuple[0][0] = abs(padd)
+
+        map = np.pad(map, pad_tuple, 'constant', constant_values=0)[trim_tuple[0][0]:trim_tuple[0][1],
+              trim_tuple[1][0]:trim_tuple[1][1]]
+        return map
 
     def get_padding_relative_to_orientation(self, current_location, object_map_shape, large_map_shape, orientation):
         """
@@ -52,17 +88,21 @@ class PathFinder:
         b -> padding from the right side of the map to the large map
         c -> padding from the top of the map to the large map
         d -> padding from the left side of the map to the large map
+        :param large_map_shape:
+        :param object_map_shape:
         :param current_location:
-        :param size:
         :param orientation:
         :return: a, b, c, d
         """
-        a, b, c, d = 0
-        xn = current_location[0]
-        yn = current_location[1]
-        bigx = large_map_shape[0]
-        bigy = large_map_shape[1]
-        half_small_map = object_map_shape[0]/2
+        print("stuff")
+        a, b, c, d = 0, 0, 0, 0
+        print("object_map" + str(object_map_shape))
+        print("large_map" + str(large_map_shape))
+        bigy = large_map_shape[0]
+        bigx = large_map_shape[1]
+        yn = bigy - current_location[0]
+        xn = current_location[1]
+        half_small_map = object_map_shape[0] / 2
         small_map = object_map_shape[1]
         if orientation == 0:
             a = yn
@@ -84,7 +124,7 @@ class PathFinder:
             b = bigx - xn
             c = bigy - yn - half_small_map
             d = xn - small_map
-        return a, b, c, d
+        return int(a), int(b), int(c), int(d)
 
     def rotate_to_orientation(self, obstacle_map, orientation):
         if orientation == 0:
@@ -95,7 +135,6 @@ class PathFinder:
             return np.rot90(obstacle_map, k=2, axes=(0, 1))
         elif orientation == 3:
             return np.rot90(obstacle_map, k=1, axes=(0, 1))
-
 
     def scale_down_grid(self, grid, scale_factor):
         """
@@ -169,7 +208,7 @@ class PathFinder:
         x2, y2 = node2
         return abs(x1 - x2) + abs(y1 - y2)
 
-    def find_path(self, start, goal):
+    def find_path(self, start):
         """
         Find the shortest path using A* algo.
 
@@ -181,9 +220,9 @@ class PathFinder:
         - path: list of positions from start to goal
         """
         print(f"Start: {self.grid[start]}")
-        print(f"Goal: {self.grid[goal]}")
+        print(f"Goal: {self.grid[self.goal]}")
         try:
-            path = nx.astar_path(self.graph, start, goal, heuristic=self._heuristic)
+            path = nx.astar_path(self.graph, start, self.goal, heuristic=self._heuristic)
             return path
         except nx.NetworkXNoPath:
             return None
@@ -226,7 +265,7 @@ class PathFinder:
                     commands.pop()
                     start_turn = False
                 commands.append("left")
-                
+
             elif delta_column == 0 and delta_row == 1:
                 commands.append("backward")
                 start_turn = True

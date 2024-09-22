@@ -7,7 +7,7 @@ import numpy as np
 
 PERSON_PAUSE = False
 SPEED = 5
-TIME_PAUSE = 0.2
+TIME_PAUSE = 0.1
 TIME_PAUSE_TURN = 2.5
 START_TURN = True
 TURNING = False
@@ -249,7 +249,7 @@ def read_command_picarx(px, command, start, goal):
         px.forward(SPEED)
         time.sleep(TIME_PAUSE_TURN)
         px.set_dir_servo_angle(0)
-    goal = increment_goal_by_direction(command, goal)
+    start = increment_car_location_by_direction(command, start)
     PERSON_PAUSE = False
     px.forward(0)
     print("start: " + str(start))
@@ -261,9 +261,11 @@ if __name__ == "__main__":
     advMap = amp.AdvancedMappingPX()
     # advMap = amp.AdvancedMapping4WD()
     try:
-        scale = 4
-        start = (int(99 / scale), int(49 / scale))
-        goal = (int(20 / scale), int(49 / scale))
+        scale = 5
+        # start = (int(99 / scale), int(49 / scale))
+        # goal = (int(20 / scale), int(49 / scale))
+        start = (29, 15)
+        goal = (5, 15)
         current_location = start
         orientation = 0
         index = 0
@@ -271,7 +273,9 @@ if __name__ == "__main__":
         command_steps = 10
         distance = 5
         count = 0
-        grid = np.zeros(abs(goal[0] - start[0]), abs(goal[1]) * 2)
+        # grid = np.zeros((abs(start[0]) * 1.5, abs(goal[1] * 2)))
+        grid = np.zeros((30 * scale, 30 * scale))
+        print("Big map size" + str(grid.shape))
         pathfinder = pf.PathFinder(grid, goal, scale_factor=scale)
         while start != goal and index < overall_step_max:
             # rescan for a new path
@@ -281,7 +285,7 @@ if __name__ == "__main__":
                 pathfinder.add_obstacles(obstacle_map, current_location, orientation)
                 pathfinder.add_image_obstacles(image_list)
                 pathfinder.visualize_grid()
-                path = pathfinder.find_path(current_location, goal)
+                path = pathfinder.find_path(current_location)
                 if path:
                     pathfinder.visualize_grid(path)
                     count = pathfinder.count
