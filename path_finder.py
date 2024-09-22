@@ -112,6 +112,10 @@ class PathFinder:
             return path
         except nx.NetworkXNoPath:
             return None
+        except nx.NetworkXError:
+            return None
+        except Exception:
+            return None
 
     def path_to_commands(self, path):
         """
@@ -122,6 +126,7 @@ class PathFinder:
             commands.append("person")
         if 1 in self.image_obstacles:
             commands.append("stop")
+        start_turn = True
         for i in range(1, len(path)):
             current_position = path[i - 1]
             next_position = path[i]
@@ -130,17 +135,29 @@ class PathFinder:
             delta_column = next_position[1] - current_position[1]
 
             # Determine the direction
-            if delta_column == -1 and delta_row == 0:
-                # done
-                commands.append("left")
-            elif delta_column == 1 and delta_row == 0:
-                # done
+            if delta_column == 1 and delta_row == 0:
+                # turn needs space
+                if commands and start_turn:
+                    commands.pop()
+                if commands and start_turn:
+                    commands.pop()
+                    start_turn = False
                 commands.append("right")
+            elif delta_column == -1 and delta_row == 0:
+                # turn needs space
+                if commands and start_turn:
+                    commands.pop()
+                if commands and start_turn:
+                    commands.pop()
+                    start_turn = False
+                commands.append("left")
+                
             elif delta_column == 0 and delta_row == 1:
                 commands.append("backward")
+                start_turn = True
             elif delta_column == 0 and delta_row == -1:
-                # done
                 commands.append("forward")
+                start_turn = True
 
         return commands
 

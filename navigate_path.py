@@ -7,12 +7,17 @@ import time
 PERSON_PAUSE = False
 SPEED = 5
 TIME_PAUSE = 0.2
-TIME_PAUSE_TURN = 1.3
+TIME_PAUSE_TURN = 2.5
+START_TURN = True
+TURNING = False
+DIRECTION = "up"
 
 """
 ToDo: this function needs to be adjusted to move the 4WD picar which uses different functions
 to the picar x
 """
+
+
 # def read_command_picar4WD(px, command, start, goal):
 #     global PERSON_PAUSE, TIME_PAUSE
 #     if command == "stop":
@@ -49,8 +54,91 @@ to the picar x
 #     px.forward(0)
 #     return start, goal
 
+def increment_goal_by_direction(command, goal):
+    global START_TURN, DIRECTION, TURNING
+    if TURNING:
+        return goal
+    if DIRECTION == "up":
+        if command == "backward":
+            goal = (goal[0] - 1, goal[1])
+            START_TURN = True
+        elif command == "forward":
+            goal = (goal[0] + 1, goal[1])
+            START_TURN = True
+        elif command == "left":
+            if START_TURN:
+                goal = (goal[0] + 3, goal[1] - 1)
+                START_TURN = False
+                TURNING = True
+                DIRECTION = "left"
+        elif command == "right":
+            if START_TURN:
+                goal = (goal[0] + 3, goal[1] + 1)
+                START_TURN = False
+                TURNING = True
+                DIRECTION = "right"
+    elif DIRECTION == "down":
+        if command == "backward":
+            goal = (goal[0] + 1, goal[1])
+            START_TURN = True
+        elif command == "forward":
+            goal = (goal[0] - 1, goal[1])
+            START_TURN = True
+        elif command == "left":
+            if START_TURN:
+                goal = (goal[0] - 3, goal[1] + 1)
+                START_TURN = False
+                TURNING = True
+                DIRECTION = "right"
+        elif command == "right":
+            if START_TURN:
+                goal = (goal[0] + 3, goal[1] - 1)
+                START_TURN = False
+                TURNING = True
+                DIRECTION = "left"
+    elif DIRECTION == "left":
+        if command == "backward":
+            goal = (goal[0], goal[1] + 1)
+            START_TURN = True
+        elif command == "forward":
+            goal = (goal[0], goal[1] - 1)
+            START_TURN = True
+        elif command == "left":
+            if START_TURN:
+                goal = (goal[0] + 1, goal[1] - 3)
+                START_TURN = False
+                TURNING = True
+                DIRECTION = "down"
+        elif command == "right":
+            if START_TURN:
+                goal = (goal[0] - 1, goal[1] + 3)
+                START_TURN = False
+                TURNING = True
+                DIRECTION = "up"
+    elif DIRECTION == "right":
+        if command == "backward":
+            goal = (goal[0], goal[1] - 1)
+            START_TURN = True
+        elif command == "forward":
+            goal = (goal[0], goal[1] + 1)
+            START_TURN = True
+        elif command == "left":
+            if START_TURN:
+                goal = (goal[0] - 1, goal[1] + 3)
+                START_TURN = False
+                TURNING = True
+                DIRECTION = "up"
+        elif command == "right":
+            if START_TURN:
+                goal = (goal[0] + 1, goal[1] - 3)
+                START_TURN = False
+                TURNING = True
+                DIRECTION = "down"
+    return goal
+
+
 def read_command_picarx(px, command, start, goal):
-    global PERSON_PAUSE, TIME_PAUSE
+    global PERSON_PAUSE, TIME_PAUSE, START_TURN, TURNING
     if command == "stop":
         time.sleep(1)
         print("STOP!!!")
@@ -62,27 +150,27 @@ def read_command_picarx(px, command, start, goal):
         px.set_dir_servo_angle(0)
         px.backward(SPEED)
         time.sleep(TIME_PAUSE)
-        goal = (goal[0] + 1, goal[1])
+        TURNING = False
     elif command == "forward":
         px.set_dir_servo_angle(0)
         px.forward(SPEED)
         time.sleep(TIME_PAUSE)
-        goal = (goal[0] - 1, goal[1])
-    elif command == "left":
+        TURNING = False
+    elif command == "left" and not TURNING:
         px.set_dir_servo_angle(-30)
         px.forward(SPEED)
         time.sleep(TIME_PAUSE_TURN)
         px.set_dir_servo_angle(0)
-        goal = (goal[0], goal[1] + 1)
-    elif command == "right":
+    elif command == "right" and not TURNING:
         px.set_dir_servo_angle(30)
         px.forward(SPEED)
         time.sleep(TIME_PAUSE_TURN)
         px.set_dir_servo_angle(0)
-        goal = (goal[0], goal[1] - 1)
+    goal = increment_goal_by_direction(command, goal)
     PERSON_PAUSE = False
     px.forward(0)
-    print(start)
+    print("start: " + str(start))
+    print("goal: " + str(goal))
     return start, goal
 
 
@@ -91,11 +179,11 @@ if __name__ == "__main__":
     # advMap = amp.AdvancedMapping4WD()
     try:
         scale = 4
-        start = (int(99/scale), int(49/scale))
-        goal = (int(20/scale), int(49/scale))
+        start = (int(99 / scale), int(49 / scale))
+        goal = (int(20 / scale), int(49 / scale))
         index = 0
         overall_step_max = 10
-        command_steps = 3
+        command_steps = 10
         distance = 5
         count = 0
         while start != goal and index < overall_step_max:
@@ -106,11 +194,11 @@ if __name__ == "__main__":
                 pathfinder = pf.PathFinder(grid, image_list, scale_factor=scale, count=count)
                 pathfinder.visualize_grid()
                 path = pathfinder.find_path(start, goal)
-                pathfinder.visualize_grid(path)
-                count = pathfinder.count
-                # break
-                # follow a few steps in A*
                 if path:
+                    pathfinder.visualize_grid(path)
+                    count = pathfinder.count
+                    # break
+                    # follow a few steps in A*
                     commands = pathfinder.path_to_commands(path)
                     print(commands)
                     if not commands:
@@ -127,10 +215,8 @@ if __name__ == "__main__":
                                 if start == goal:
                                     print("GOAL!!!")
                             step_count += 1
-
                 else:
-                    start = goal
-                    index = overall_step_max
+                    start, goal = read_command_picarx(advMap.px, "backward", start, goal)
             except Exception as e:
                 start = goal
                 index = overall_step_max
