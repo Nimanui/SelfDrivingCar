@@ -66,7 +66,7 @@ if __name__ == "__main__":
                 # follow a few steps in A*
                 if path:
                     commands = pathfinder.path_to_commands(path)
-                    print(commands)
+                    print('execution commands', commands)
                     if not commands:
                         print("GOAL!!!")
                     else:

@@ -15,16 +15,20 @@ from picamera2 import Picamera2
 # Recommendation 1: The car is in middle of grid of X-direction, and 0 y-direction
 # Recommendation 2: Experiment at 5 degree increments (-60, -55, -50)
 class AdvancedMapping4WD:
-    def __init__(self):
+    def __init__(self, enable_detection=True):
         # Global variables to calculate FPS
         COUNTER, FPS = 0, 0
         START_TIME = time.time()
-        self.picam2 = Picamera2()
-        self.picam2.preview_configuration.main.size = (640, 480)
-        self.picam2.preview_configuration.main.format = "RGB888"
-        self.picam2.preview_configuration.align()
-        self.picam2.configure("preview")
-        self.picam2.start()
+        try:
+            self.picam2 = Picamera2()
+            self.picam2.preview_configuration.main.size = (640, 480)
+            self.picam2.preview_configuration.main.format = "RGB888"
+            self.picam2.preview_configuration.align()
+            self.picam2.configure("preview")
+            self.picam2.start()
+        except Exception as e:
+            print("Camera not detected or could not be initialized.")
+            self.picam2 = None
 
         self.GRID_SIZE = (100, 100)
         self.GRID = np.zeros(self.GRID_SIZE)
@@ -58,13 +62,15 @@ class AdvancedMapping4WD:
         self.score_threshold = 0.30
         self.max_results = 5
         self.image_obstacles = []
-        # Initialize the object detection model
-        self.base_options = python.BaseOptions(model_asset_path=self.model)
-        self.options = vision.ObjectDetectorOptions(base_options=self.base_options,
-                                                    running_mode=vision.RunningMode.LIVE_STREAM,
-                                                    max_results=self.max_results, score_threshold=self.score_threshold,
-                                                    result_callback=self.save_result)
-        self.detector = vision.ObjectDetector.create_from_options(self.options)
+        self.enable_detection = enable_detection
+        if self.enable_detection:
+            # Initialize the object detection model
+            self.base_options = python.BaseOptions(model_asset_path=self.model)
+            self.options = vision.ObjectDetectorOptions(base_options=self.base_options,
+                                                        running_mode=vision.RunningMode.LIVE_STREAM,
+                                                        max_results=self.max_results, score_threshold=self.score_threshold,
+                                                        result_callback=self.save_result)
+            self.detector = vision.ObjectDetector.create_from_options(self.options)
         self.FPS = 0
         self.COUNTER = 0
         self.START_TIME = 0
@@ -193,20 +199,23 @@ class AdvancedMapping4WD:
             # Convert the angle to radians before passing to function
             self.advanced_mapping(np.radians(theta), dist, theta)
             if self.MIN_ANGLE_CAM < theta < self.MAX_ANGLE_CAM:
-                im = self.picam2.capture_array()
-                #    success, image = cap.read()
-                image = cv2.resize(im, (640, 480))
-                image = cv2.flip(image, -1)
+                try:
+                    im = self.picam2.capture_array()
+                    #    success, image = cap.read()
+                    image = cv2.resize(im, (640, 480))
+                    image = cv2.flip(image, -1)
 
-                # Convert the image from BGR to RGB as required by the TFLite model.
-                rgb_image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
-                mp_image = mp.Image(image_format=mp.ImageFormat.SRGB, data=rgb_image)
+                    # Convert the image from BGR to RGB as required by the TFLite model.
+                    rgb_image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+                    mp_image = mp.Image(image_format=mp.ImageFormat.SRGB, data=rgb_image)
 
-                # Run object detection using the model.
-                self.detector.detect_async(mp_image, time.time_ns() // 1_000_000)
-                # Show the FPS
-                fps_text = 'FPS = {:.1f}'.format(self.FPS)
-                self.detection_results(fps_text)
+                    # Run object detection using the model.
+                    self.detector.detect_async(mp_image, time.time_ns() // 1_000_000)
+                    # Show the FPS
+                    fps_text = 'FPS = {:.1f}'.format(self.FPS)
+                    self.detection_results(fps_text)
+                except Exception as e:
+                    print("Error processing camera image or running detection: ", e)
             time.sleep(0.1)
 
         # Image processsing
