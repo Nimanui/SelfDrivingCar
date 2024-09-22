@@ -6,7 +6,7 @@ from scipy.ndimage import zoom
 import time
 
 class PathFinder:
-    def __init__(self, grid_in, goal, image_obstacles, car_size=1, scale_factor=1, count=0):
+    def __init__(self, grid_in, goal, car_size=1, scale_factor=1):
         """
         Initialize with the grid and car size.
 
@@ -21,10 +21,14 @@ class PathFinder:
         self.grid = self.scale_down_grid(grid_in, scale_factor)
         self.goal = goal
         self.car_size = car_size
+        # self.add_obstacles(obstacle_map=obstacles, current_location=start, orientation=0)
         self.graph = self._grid_to_graph(self.grid)
-        self.image_obstacles = image_obstacles
-        self.count = count
+        # self.image_obstacles = image_obstacles
+        self.count = 0
         self.direction = 0
+
+    def add_image_obstacles(self, image_obstacles):
+        self.image_obstacles = image_obstacles
 
     def add_obstacles(self, obstacle_map, current_location, orientation):
         """
@@ -35,6 +39,62 @@ class PathFinder:
         :return:
         """
         scaled_map = self.scale_down_grid(obstacle_map, self.scale_factor)
+        rotated_map = self.rotate_to_orientation(scaled_map, orientation)
+        pada, padb, padc, padd = self.get_padding_relative_to_orientation(current_location, rotated_map.shape, self.grid.shape, orientation)
+        padded_map = np.pad(rotated_map, ((padd, padb), (padc, pada)), 'constant', constant_values=0)
+        self.grid = np.add(self.grid, padded_map)
+
+
+    def get_padding_relative_to_orientation(self, current_location, object_map_shape, large_map_shape, orientation):
+        """
+        Goal is to calculate the padding parameters a, b, c, and d
+        a -> padding from the bottom of the map to the large map
+        b -> padding from the right side of the map to the large map
+        c -> padding from the top of the map to the large map
+        d -> padding from the left side of the map to the large map
+        :param current_location:
+        :param size:
+        :param orientation:
+        :return: a, b, c, d
+        """
+        a, b, c, d = 0
+        xn = current_location[0]
+        yn = current_location[1]
+        bigx = large_map_shape[0]
+        bigy = large_map_shape[1]
+        half_small_map = object_map_shape[0]/2
+        small_map = object_map_shape[1]
+        if orientation == 0:
+            a = yn
+            b = bigx - xn - half_small_map
+            c = bigy - yn - small_map
+            d = xn - half_small_map
+        elif orientation == 1:
+            a = yn - half_small_map
+            b = bigx - xn - small_map
+            c = bigy - yn - half_small_map
+            d = xn
+        elif orientation == 2:
+            a = yn - small_map
+            b = bigx - xn - half_small_map
+            c = bigy - yn
+            d = xn - half_small_map
+        elif orientation == 3:
+            a = yn - half_small_map
+            b = bigx - xn
+            c = bigy - yn - half_small_map
+            d = xn - small_map
+        return a, b, c, d
+
+    def rotate_to_orientation(self, obstacle_map, orientation):
+        if orientation == 0:
+            return obstacle_map
+        elif orientation == 1:
+            return np.rot90(obstacle_map, k=3, axes=(0, 1))
+        elif orientation == 2:
+            return np.rot90(obstacle_map, k=2, axes=(0, 1))
+        elif orientation == 3:
+            return np.rot90(obstacle_map, k=1, axes=(0, 1))
 
 
     def scale_down_grid(self, grid, scale_factor):

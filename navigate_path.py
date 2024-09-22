@@ -3,6 +3,7 @@ import advanced_mapping_picarx as amp
 # import picar_4wd as fc
 import path_finder as pf
 import time
+import numpy as np
 
 PERSON_PAUSE = False
 SPEED = 5
@@ -10,7 +11,8 @@ TIME_PAUSE = 0.2
 TIME_PAUSE_TURN = 2.5
 START_TURN = True
 TURNING = False
-DIRECTION = "up"
+ORIENTATION = 0
+# 0 = "up", 1 = "right", 2 = "down", 3 = "left"
 
 """
 ToDo: this function needs to be adjusted to move the 4WD picar which uses different functions
@@ -54,10 +56,10 @@ to the picar x
 #     px.forward(0)
 #     return start, goal
 def increment_car_location_by_direction(command, current_location):
-    global START_TURN, DIRECTION, TURNING
+    global START_TURN, ORIENTATION, TURNING
     if TURNING:
         return current_location
-    if DIRECTION == "up":
+    if ORIENTATION == 0:
         if command == "backward":
             current_location = (current_location[0] + 1, current_location[1])
             START_TURN = True
@@ -69,14 +71,14 @@ def increment_car_location_by_direction(command, current_location):
                 current_location = (current_location[0] - 3, current_location[1] + 1)
                 START_TURN = False
                 TURNING = True
-                DIRECTION = "left"
+                ORIENTATION = 3
         elif command == "right":
             if START_TURN:
                 current_location = (current_location[0] - 3, current_location[1] - 1)
                 START_TURN = False
                 TURNING = True
-                DIRECTION = "right"
-    elif DIRECTION == "down":
+                ORIENTATION = 1
+    elif ORIENTATION == 2:
         if command == "backward":
             current_location = (current_location[0] - 1, current_location[1])
             START_TURN = True
@@ -88,14 +90,14 @@ def increment_car_location_by_direction(command, current_location):
                 current_location = (current_location[0] + 3, current_location[1] - 1)
                 START_TURN = False
                 TURNING = True
-                DIRECTION = "right"
+                ORIENTATION = 1
         elif command == "right":
             if START_TURN:
                 current_location = (current_location[0] - 3, current_location[1] + 1)
                 START_TURN = False
                 TURNING = True
-                DIRECTION = "left"
-    elif DIRECTION == "left":
+                ORIENTATION = 3
+    elif ORIENTATION == 3:
         if command == "backward":
             current_location = (current_location[0], current_location[1] - 1)
             START_TURN = True
@@ -107,14 +109,14 @@ def increment_car_location_by_direction(command, current_location):
                 current_location = (current_location[0] - 1, current_location[1] + 3)
                 START_TURN = False
                 TURNING = True
-                DIRECTION = "down"
+                ORIENTATION = 2
         elif command == "right":
             if START_TURN:
                 current_location = (current_location[0] + 1, current_location[1] - 3)
                 START_TURN = False
                 TURNING = True
-                DIRECTION = "up"
-    elif DIRECTION == "right":
+                ORIENTATION = 0
+    elif ORIENTATION == 1:
         if command == "backward":
             current_location = (current_location[0], current_location[1] + 1)
             START_TURN = True
@@ -126,20 +128,20 @@ def increment_car_location_by_direction(command, current_location):
                 current_location = (current_location[0] + 1, current_location[1] - 3)
                 START_TURN = False
                 TURNING = True
-                DIRECTION = "up"
+                ORIENTATION = 0
         elif command == "right":
             if START_TURN:
                 current_location = (current_location[0] - 1, current_location[1] + 3)
                 START_TURN = False
                 TURNING = True
-                DIRECTION = "down"
+                ORIENTATION = 2
     return current_location
 
 def increment_goal_by_direction(command, goal):
-    global START_TURN, DIRECTION, TURNING
+    global START_TURN, ORIENTATION, TURNING
     if TURNING:
         return goal
-    if DIRECTION == "up":
+    if ORIENTATION == 0:
         if command == "backward":
             goal = (goal[0] - 1, goal[1])
             START_TURN = True
@@ -151,14 +153,14 @@ def increment_goal_by_direction(command, goal):
                 goal = (goal[0] + 3, goal[1] - 1)
                 START_TURN = False
                 TURNING = True
-                DIRECTION = "left"
+                ORIENTATION = 3
         elif command == "right":
             if START_TURN:
                 goal = (goal[0] + 3, goal[1] + 1)
                 START_TURN = False
                 TURNING = True
-                DIRECTION = "right"
-    elif DIRECTION == "down":
+                ORIENTATION = 1
+    elif ORIENTATION == 2:
         if command == "backward":
             goal = (goal[0] + 1, goal[1])
             START_TURN = True
@@ -170,14 +172,14 @@ def increment_goal_by_direction(command, goal):
                 goal = (goal[0] - 3, goal[1] + 1)
                 START_TURN = False
                 TURNING = True
-                DIRECTION = "right"
+                ORIENTATION = 1
         elif command == "right":
             if START_TURN:
                 goal = (goal[0] + 3, goal[1] - 1)
                 START_TURN = False
                 TURNING = True
-                DIRECTION = "left"
-    elif DIRECTION == "left":
+                ORIENTATION = 3
+    elif ORIENTATION == 3:
         if command == "backward":
             goal = (goal[0], goal[1] + 1)
             START_TURN = True
@@ -189,14 +191,14 @@ def increment_goal_by_direction(command, goal):
                 goal = (goal[0] + 1, goal[1] - 3)
                 START_TURN = False
                 TURNING = True
-                DIRECTION = "down"
+                ORIENTATION = 2
         elif command == "right":
             if START_TURN:
                 goal = (goal[0] - 1, goal[1] + 3)
                 START_TURN = False
                 TURNING = True
-                DIRECTION = "up"
-    elif DIRECTION == "right":
+                ORIENTATION = 0
+    elif ORIENTATION == 1:
         if command == "backward":
             goal = (goal[0], goal[1] - 1)
             START_TURN = True
@@ -208,13 +210,13 @@ def increment_goal_by_direction(command, goal):
                 goal = (goal[0] - 1, goal[1] + 3)
                 START_TURN = False
                 TURNING = True
-                DIRECTION = "up"
+                ORIENTATION = 0
         elif command == "right":
             if START_TURN:
                 goal = (goal[0] + 1, goal[1] - 3)
                 START_TURN = False
                 TURNING = True
-                DIRECTION = "down"
+                ORIENTATION = 2
     return goal
 
 
@@ -262,19 +264,24 @@ if __name__ == "__main__":
         scale = 4
         start = (int(99 / scale), int(49 / scale))
         goal = (int(20 / scale), int(49 / scale))
+        current_location = start
+        orientation = 0
         index = 0
         overall_step_max = 10
         command_steps = 10
         distance = 5
         count = 0
+        grid = np.zeros(abs(goal[0] - start[0]), abs(goal[1]) * 2)
+        pathfinder = pf.PathFinder(grid, goal, scale_factor=scale)
         while start != goal and index < overall_step_max:
             # rescan for a new path
             advMap.reset_grid()
             try:
-                grid, image_list = advMap.sensor_loop(1 - 2 * (index % 2))
-                pathfinder = pf.PathFinder(grid, image_list, scale_factor=scale, count=count)
+                obstacle_map, image_list = advMap.sensor_loop(1 - 2 * (index % 2))
+                pathfinder.add_obstacles(obstacle_map, current_location, orientation)
+                pathfinder.add_image_obstacles(image_list)
                 pathfinder.visualize_grid()
-                path = pathfinder.find_path(start, goal)
+                path = pathfinder.find_path(current_location, goal)
                 if path:
                     pathfinder.visualize_grid(path)
                     count = pathfinder.count
@@ -290,16 +297,16 @@ if __name__ == "__main__":
                             command = commands.pop(0)
                             print(command)
                             print(commands)
-                            start, goal = read_command_picarx(advMap.px, command, start, goal)
-                            if PERSON_PAUSE or start == goal:
+                            current_location, goal = read_command_picarx(advMap.px, command, current_location, goal)
+                            if PERSON_PAUSE or current_location == goal:
                                 step_count += command_steps
-                                if start == goal:
+                                if current_location == goal:
                                     print("GOAL!!!")
                             step_count += 1
                 else:
-                    start, goal = read_command_picarx(advMap.px, "backward", start, goal)
+                    current_location, goal = read_command_picarx(advMap.px, "backward", current_location, goal)
             except Exception as e:
-                start = goal
+                current_location = goal
                 index = overall_step_max
                 print(e)
             finally:
