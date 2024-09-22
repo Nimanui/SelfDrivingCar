@@ -19,7 +19,7 @@ from vilib import Vilib
 
 # Recommendation 1: The car is in middle of grid of X-direction, and 0 y-direction
 # Recommendation 2: Experiment at 5 degree increments (-60, -55, -50)
-class AdvancedMapping:
+class AdvancedMappingPX:
     def __init__(self):
         # Global variables to calculate FPS
         COUNTER, FPS = 0, 0

@@ -6,8 +6,48 @@ import time
 
 PERSON_PAUSE = False
 SPEED = 5
-TIME_PAUSE = 0.5
+TIME_PAUSE = 0.3
+TIME_PAUSE_TURN = 0.7
 
+"""
+ToDo: this function needs to be adjusted to move the 4WD picar which uses different functions
+to the picar x
+"""
+# def read_command_picar4WD(px, command, start, goal):
+#     global PERSON_PAUSE, TIME_PAUSE
+#     if command == "stop":
+#         time.sleep(1)
+#         print("STOP!!!")
+#     elif command == "person":
+#         PERSON_PAUSE = True
+#         print("PERSON!!!")
+#         return start, goal
+#     elif command == "backward":
+#         px.set_dir_servo_angle(0)
+#         px.backward(SPEED)
+#         time.sleep(TIME_PAUSE)
+#         goal = (goal[0], goal[1] + 1)
+#     elif command == "forward":
+#         px.set_dir_servo_angle(0)
+#         px.forward(SPEED)
+#         time.sleep(TIME_PAUSE)
+#         start = (start[0], start[1] + 1)
+#     elif command == "left":
+#         print("left")
+#         px.set_dir_servo_angle(-30)
+#         px.forward(SPEED*2)
+#         time.sleep(TIME_PAUSE * 4)
+#         px.set_dir_servo_angle(0)
+#         start = (start[0] - 1, start[1])
+#     elif command == "right":
+#         px.set_dir_servo_angle(30)
+#         px.forward(SPEED*2)
+#         time.sleep(TIME_PAUSE * 4)
+#         px.set_dir_servo_angle(0)
+#         start = (start[0] + 1, start[1])
+#     PERSON_PAUSE = False
+#     px.forward(0)
+#     return start, goal
 
 def read_command_picarx(px, command, start, goal):
     global PERSON_PAUSE, TIME_PAUSE
@@ -22,52 +62,53 @@ def read_command_picarx(px, command, start, goal):
         px.set_dir_servo_angle(0)
         px.backward(SPEED)
         time.sleep(TIME_PAUSE)
-        goal = (goal[0], goal[1] + 1)
+        start = (start[0] + 1, start[1])
     elif command == "forward":
         px.set_dir_servo_angle(0)
         px.forward(SPEED)
         time.sleep(TIME_PAUSE)
-        start = (start[0], start[1] + 1)
-    elif command == "left":
-        print("left")
-        px.set_dir_servo_angle(-30)
-        px.forward(SPEED*2)
-        time.sleep(TIME_PAUSE * 4)
-        px.set_dir_servo_angle(0)
         start = (start[0] - 1, start[1])
+    elif command == "left":
+        px.set_dir_servo_angle(-30)
+        px.forward(SPEED)
+        time.sleep(TIME_PAUSE_TURN)
+        px.set_dir_servo_angle(0)
+        start = (start[0], start[1] - 1)
     elif command == "right":
         px.set_dir_servo_angle(30)
-        px.forward(SPEED*2)
-        time.sleep(TIME_PAUSE * 4)
+        px.forward(SPEED)
+        time.sleep(TIME_PAUSE_TURN)
         px.set_dir_servo_angle(0)
-        start = (start[0] + 1, start[1])
+        start = (start[0], start[1] + 1)
     PERSON_PAUSE = False
     px.forward(0)
+    print(start)
     return start, goal
 
 
 if __name__ == "__main__":
-    advMap = amp.AdvancedMapping()
+    advMap = amp.AdvancedMappingPX()
+    # advMap = amp.AdvancedMapping4WD()
     try:
-        start = (2, 0)
-        goal = (2, 3)
-        # grid, image_list = advMap.sensor_loop(1)
-        # pathfinder = pf.PathFinder(grid, image_list)
+        scale = 10
+        start = (int(99/scale), int(49/scale))
+        goal = (int(20/scale), int(49/scale))
         index = 0
         overall_step_max = 10
-        # path = pathfinder.find_path(start, goal)
-        # commands = []
-        # if path:
-        #     commands = pathfinder.path_to_commands(path)
         command_steps = 3
         distance = 5
+        count = 0
         while start != goal and index < overall_step_max:
             # rescan for a new path
             advMap.reset_grid()
             try:
                 grid, image_list = advMap.sensor_loop(1 - 2 * (index % 2))
-                pathfinder = pf.PathFinder(grid, image_list)
+                pathfinder = pf.PathFinder(grid, image_list, scale_factor=scale, count=count)
+                pathfinder.visualize_grid()
                 path = pathfinder.find_path(start, goal)
+                pathfinder.visualize_grid(path)
+                count = pathfinder.count
+                # break
                 # follow a few steps in A*
                 if path:
                     commands = pathfinder.path_to_commands(path)
@@ -82,7 +123,6 @@ if __name__ == "__main__":
                             print(commands)
                             start, goal = read_command_picarx(advMap.px, command, start, goal)
                             if PERSON_PAUSE or start == goal:
-                                print("PERSON PAUSE!!!")
                                 step_count += command_steps
                                 if start == goal:
                                     print("GOAL!!!")
