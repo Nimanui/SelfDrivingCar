@@ -28,6 +28,7 @@ class PathFinder:
         # self.image_obstacles = image_obstacles
         self.count = 0
         self.direction = 0
+        self.current_location = (0, 0)
 
     def add_image_obstacles(self, image_obstacles):
         self.image_obstacles = image_obstacles
@@ -54,20 +55,22 @@ class PathFinder:
         # padded_map = np.pad(rotated_map, ((padd, padb), (padc, pada)), 'constant', constant_values=0)
         padded_map = self.pad_map(pada, padb, padc, padd, rotated_map, self.grid)
         self.grid = np.add(self.grid, padded_map)
+        self.grid = np.ceil(self.grid/2)
         self.graph = self._grid_to_graph(self.grid)
+        self.current_location = current_location
 
     def pad_map(self, pada, padb, padc, padd, map, big_map):
-        big_map_shape = big_map.shape
+        big_map_shape = map.shape
         pad_tuple = [[0, 0], [0, 0]]
         trim_tuple = [[0, big_map_shape[0]], [0, big_map_shape[1]]]
         if pada > 0:
             pad_tuple[1][1] = pada
-        # else:
-        #     trim_tuple[1][1] = big_map_shape[1] - abs(pada)
+        else:
+            trim_tuple[1][1] = big_map_shape[1] - abs(pada)
         if padb > 0:
             pad_tuple[0][1] = padb
-        # else:
-        #     trim_tuple[0][1] = big_map_shape[0] - abs(padb)
+        else:
+            trim_tuple[0][1] = big_map_shape[0] - abs(padb)
         if padc > 0:
             pad_tuple[1][0] = padc
         else:
@@ -77,8 +80,8 @@ class PathFinder:
         else:
             trim_tuple[0][0] = abs(padd)
 
-        map = np.pad(map, pad_tuple, 'constant', constant_values=0)[trim_tuple[0][0]:trim_tuple[0][1],
-              trim_tuple[1][0]:trim_tuple[1][1]]
+        map = np.pad(map[trim_tuple[0][0]:trim_tuple[0][1],
+              trim_tuple[1][0]:trim_tuple[1][1]], pad_tuple, 'constant', constant_values=0)
         return map
 
     def get_padding_relative_to_orientation(self, current_location, object_map_shape, large_map_shape, orientation):
@@ -208,7 +211,7 @@ class PathFinder:
         x2, y2 = node2
         return abs(x1 - x2) + abs(y1 - y2)
 
-    def find_path(self, start):
+    def find_path(self):
         """
         Find the shortest path using A* algo.
 
@@ -219,10 +222,10 @@ class PathFinder:
         Returns:
         - path: list of positions from start to goal
         """
-        print(f"Start: {self.grid[start]}")
+        print(f"Start: {self.grid[self.current_location]}")
         print(f"Goal: {self.grid[self.goal]}")
         try:
-            path = nx.astar_path(self.graph, start, self.goal, heuristic=self._heuristic)
+            path = nx.astar_path(self.graph, self.current_location, self.goal, heuristic=self._heuristic)
             return path
         except nx.NetworkXNoPath:
             return None
@@ -242,11 +245,11 @@ class PathFinder:
             commands.append("stop")
         start_turn = True
         for i in range(1, len(path)):
-            current_position = path[i - 1]
+            current_path_position = path[i - 1]
             next_position = path[i]
 
-            delta_row = next_position[0] - current_position[0]
-            delta_column = next_position[1] - current_position[1]
+            delta_row = next_position[0] - current_path_position[0]
+            delta_column = next_position[1] - current_path_position[1]
 
             # Determine the direction
             if delta_column == 1 and delta_row == 0:
@@ -257,7 +260,7 @@ class PathFinder:
                     commands.pop()
                     start_turn = False
                 commands.append("right")
-            elif delta_column == -1 and delta_row == 0:
+            if delta_column == -1 and delta_row == 0:
                 # turn needs space
                 if commands and start_turn:
                     commands.pop()
@@ -266,10 +269,10 @@ class PathFinder:
                     start_turn = False
                 commands.append("left")
 
-            elif delta_column == 0 and delta_row == 1:
+            if delta_column == 0 and delta_row == 1:
                 commands.append("backward")
                 start_turn = True
-            elif delta_column == 0 and delta_row == -1:
+            if delta_column == 0 and delta_row == -1:
                 commands.append("forward")
                 start_turn = True
 
