@@ -6,8 +6,8 @@ import time
 
 PERSON_PAUSE = False
 SPEED = 5
-TIME_PAUSE = 0.3
-TIME_PAUSE_TURN = 0.7
+TIME_PAUSE = 0.2
+TIME_PAUSE_TURN = 1.3
 
 """
 ToDo: this function needs to be adjusted to move the 4WD picar which uses different functions
@@ -62,24 +62,24 @@ def read_command_picarx(px, command, start, goal):
         px.set_dir_servo_angle(0)
         px.backward(SPEED)
         time.sleep(TIME_PAUSE)
-        start = (start[0] + 1, start[1])
+        goal = (goal[0] + 1, goal[1])
     elif command == "forward":
         px.set_dir_servo_angle(0)
         px.forward(SPEED)
         time.sleep(TIME_PAUSE)
-        start = (start[0] - 1, start[1])
+        goal = (goal[0] - 1, goal[1])
     elif command == "left":
         px.set_dir_servo_angle(-30)
         px.forward(SPEED)
         time.sleep(TIME_PAUSE_TURN)
         px.set_dir_servo_angle(0)
-        start = (start[0], start[1] - 1)
+        goal = (goal[0], goal[1] + 1)
     elif command == "right":
         px.set_dir_servo_angle(30)
         px.forward(SPEED)
         time.sleep(TIME_PAUSE_TURN)
         px.set_dir_servo_angle(0)
-        start = (start[0], start[1] + 1)
+        goal = (goal[0], goal[1] - 1)
     PERSON_PAUSE = False
     px.forward(0)
     print(start)
@@ -90,7 +90,7 @@ if __name__ == "__main__":
     advMap = amp.AdvancedMappingPX()
     # advMap = amp.AdvancedMapping4WD()
     try:
-        scale = 10
+        scale = 4
         start = (int(99/scale), int(49/scale))
         goal = (int(20/scale), int(49/scale))
         index = 0
