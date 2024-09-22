@@ -105,6 +105,8 @@ class PathFinder:
         Returns:
         - path: list of positions from start to goal
         """
+        print(f"Start: {self.grid[start]}")
+        print(f"Goal: {self.grid[goal]}")
         try:
             path = nx.astar_path(self.graph, start, goal, heuristic=self._heuristic)
             return path
@@ -149,6 +151,7 @@ class PathFinder:
                     commands.pop()
                     start_turn = False
                 commands.append("left")
+                
             elif delta_column == 0 and delta_row == 1:
                 commands.append("backward")
                 start_turn = True
