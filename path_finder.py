@@ -167,7 +167,7 @@ class PathFinder:
         """
         commands = []
 
-        # Handle image-based obstacles at the start
+        # Handle image-based obstacles
         if 2 in self.image_obstacles:
             commands.append("person")
         if 1 in self.image_obstacles:
@@ -197,7 +197,7 @@ class PathFinder:
 
             # Add turn if necessary
             if desired_direction != current_direction:
-                turn = self.get_turn(current_direction, desired_direction)
+                turn = self._get_turn(current_direction, desired_direction)
                 if turn:
                     commands.append(turn)
                 current_direction = desired_direction  # Update to new direction
@@ -217,9 +217,9 @@ class PathFinder:
 
         return commands
 
-    def get_turn(self, current_direction, desired_direction):
+    def _get_turn(self, current_direction, desired_direction):
         """
-        Determine if the car needs to turn left, right, or make a U-turn.
+        Determine if the car needs to turn left, right, or U-turn (previously called backwards).
         """
         directions = ['NORTH', 'EAST', 'SOUTH', 'WEST']
         current_idx = directions.index(current_direction)
