@@ -53,6 +53,87 @@ to the picar x
 #     PERSON_PAUSE = False
 #     px.forward(0)
 #     return start, goal
+def increment_car_location_by_direction(command, current_location):
+    global START_TURN, DIRECTION, TURNING
+    if TURNING:
+        return current_location
+    if DIRECTION == "up":
+        if command == "backward":
+            current_location = (current_location[0] + 1, current_location[1])
+            START_TURN = True
+        elif command == "forward":
+            current_location = (current_location[0] - 1, current_location[1])
+            START_TURN = True
+        elif command == "left":
+            if START_TURN:
+                current_location = (current_location[0] - 3, current_location[1] + 1)
+                START_TURN = False
+                TURNING = True
+                DIRECTION = "left"
+        elif command == "right":
+            if START_TURN:
+                current_location = (current_location[0] - 3, current_location[1] - 1)
+                START_TURN = False
+                TURNING = True
+                DIRECTION = "right"
+    elif DIRECTION == "down":
+        if command == "backward":
+            current_location = (current_location[0] - 1, current_location[1])
+            START_TURN = True
+        elif command == "forward":
+            current_location = (current_location[0] + 1, current_location[1])
+            START_TURN = True
+        elif command == "left":
+            if START_TURN:
+                current_location = (current_location[0] + 3, current_location[1] - 1)
+                START_TURN = False
+                TURNING = True
+                DIRECTION = "right"
+        elif command == "right":
+            if START_TURN:
+                current_location = (current_location[0] - 3, current_location[1] + 1)
+                START_TURN = False
+                TURNING = True
+                DIRECTION = "left"
+    elif DIRECTION == "left":
+        if command == "backward":
+            current_location = (current_location[0], current_location[1] - 1)
+            START_TURN = True
+        elif command == "forward":
+            current_location = (current_location[0], current_location[1] + 1)
+            START_TURN = True
+        elif command == "left":
+            if START_TURN:
+                current_location = (current_location[0] - 1, current_location[1] + 3)
+                START_TURN = False
+                TURNING = True
+                DIRECTION = "down"
+        elif command == "right":
+            if START_TURN:
+                current_location = (current_location[0] + 1, current_location[1] - 3)
+                START_TURN = False
+                TURNING = True
+                DIRECTION = "up"
+    elif DIRECTION == "right":
+        if command == "backward":
+            current_location = (current_location[0], current_location[1] + 1)
+            START_TURN = True
+        elif command == "forward":
+            current_location = (current_location[0], current_location[1] - 1)
+            START_TURN = True
+        elif command == "left":
+            if START_TURN:
+                current_location = (current_location[0] + 1, current_location[1] - 3)
+                START_TURN = False
+                TURNING = True
+                DIRECTION = "up"
+        elif command == "right":
+            if START_TURN:
+                current_location = (current_location[0] - 1, current_location[1] + 3)
+                START_TURN = False
+                TURNING = True
+                DIRECTION = "down"
+    return current_location
 
 def increment_goal_by_direction(command, goal):
     global START_TURN, DIRECTION, TURNING
