@@ -137,6 +137,17 @@ def increment_car_location_by_direction(command, current_location):
                 ORIENTATION = 2
     return current_location
 
+def get_orientation_command():
+    global ORIENTATION
+    if ORIENTATION == 0:
+        return "forward"
+    elif ORIENTATION == 1:
+        return "right"
+    elif ORIENTATION == 2:
+        return "backward"
+    elif ORIENTATION == 3:
+        return "left"
+
 def increment_goal_by_direction(command, goal):
     global START_TURN, ORIENTATION, TURNING
     if TURNING:
@@ -220,6 +231,7 @@ def increment_goal_by_direction(command, goal):
     return goal
 
 def translate_commands(command, next_command):
+    global PERSON_PAUSE
     if command == "forward":
         if next_command == "forward":
             return "forward"
@@ -248,6 +260,10 @@ def translate_commands(command, next_command):
             return "forward"
         elif next_command == "forward":
             return "right"
+    if command == "person" or next_command == "person":
+        return "person"
+    if command == "stop" or next_command == "stop":
+        return "stop"
 
 def read_command_picarx(px, command, start, goal):
     global PERSON_PAUSE, TIME_PAUSE, START_TURN, TURNING
@@ -299,13 +315,13 @@ if __name__ == "__main__":
         orientation = 0
         index = 0
         overall_step_max = 10
-        command_steps = 40
+        command_steps = 10
         distance = 5
         count = 0
         # grid = np.zeros((abs(start[0]) * 1.5, abs(goal[1] * 2)))
         grid = np.zeros((30 * scale, 30 * scale))
         print("Big map size" + str(grid.shape))
-        pathfinder = pf.PathFinder(grid, goal, scale_factor=scale)
+        pathfinder = pf.PathFinder(grid, goal, scale_factor=scale, car_size=1)
         while current_location != goal and index < overall_step_max:
             # rescan for a new path
             advMap.reset_grid()
@@ -321,13 +337,17 @@ if __name__ == "__main__":
                     # break
                     # follow a few steps in A*
                     commands = pathfinder.path_to_commands(path)
+
                     print(commands)
                     if not commands or current_location == goal:
                         print("GOAL!!!")
                     else:
                         step_count = 0
-                        while step_count < command_steps:
-                            command = commands.pop(0)
+                        while step_count < command_steps and command:
+                            if step_count > 1:
+                                command = commands.pop(0)
+                            elif step_count == 0:
+                                command = get_orientation_command()
                             next_command = command
                             if commands:
                                 next_command = commands[0]
@@ -336,6 +356,7 @@ if __name__ == "__main__":
                             print(commands)
                             print(real_command)
                             current_location, goal = read_command_picarx(advMap.px, real_command, current_location, goal)
+                            print("Current Location post command: " + str(current_location))
                             if PERSON_PAUSE or current_location == goal:
                                 step_count += command_steps
                                 if current_location == goal:
