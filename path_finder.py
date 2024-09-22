@@ -117,7 +117,7 @@ class PathFinder:
         except Exception:
             return None
 
-    def path_to_commands(self, path):
+    def path_to_grid_commands(self, path):
         """
         Convert a path of tuples to movement commands.
         """
@@ -160,6 +160,80 @@ class PathFinder:
                 start_turn = True
 
         return commands
+
+    def path_to_commands(self, path, current_direction='NORTH'):
+        """
+        Convert a path of tuples to movement commands.
+        """
+        commands = []
+
+        # Handle image-based obstacles at the start
+        if 2 in self.image_obstacles:
+            commands.append("person")
+        if 1 in self.image_obstacles:
+            commands.append("stop")
+
+        if not path or len(path) < 1:
+            return commands
+
+        # NORTH (0), EAST (1), SOUTH (2), WEST (3)
+        direction_map = {
+            (0, 1): 'EAST',  # Moving right
+            (0, -1): 'WEST',  # Moving left
+            (1, 0): 'SOUTH',  # Moving down
+            (-1, 0): 'NORTH'  # Moving up
+        }
+
+        for point in range(1, len(path)):
+            current_pos = path[point - 1]
+            next_pos = path[point]
+
+            # Calculate the movement delta
+            delta_row = next_pos[0] - current_pos[0]
+            delta_col = next_pos[1] - current_pos[1]
+
+            # Determine desired direction
+            desired_direction = direction_map[(delta_row, delta_col)]
+
+            # Add turn if necessary
+            if desired_direction != current_direction:
+                turn = self.get_turn(current_direction, desired_direction)
+                if turn:
+                    commands.append(turn)
+                current_direction = desired_direction  # Update to new direction
+
+                # "forward" if the next segment of the path continues
+                if point < len(path) - 1:
+                    next_delta_row = path[point + 1][0] - next_pos[0]
+                    next_delta_col = path[point + 1][1] - next_pos[1]
+                    next_direction = direction_map[(next_delta_row, next_delta_col)]
+
+                    if next_direction == current_direction:
+                        commands.append("forward")
+
+            else:
+                # Move forward if in the correct direction
+                commands.append("forward")
+
+        return commands
+
+    def get_turn(self, current_direction, desired_direction):
+        """
+        Determine if the car needs to turn left, right, or make a U-turn.
+        """
+        directions = ['NORTH', 'EAST', 'SOUTH', 'WEST']
+        current_idx = directions.index(current_direction)
+        desired_idx = directions.index(desired_direction)
+
+        # Calculate turn direction
+        if (desired_idx - current_idx) % 4 == 1:
+            return 'right'
+        elif (current_idx - desired_idx) % 4 == 1:
+            return 'left'
+        elif abs(desired_idx - current_idx) == 2:
+            return 'uturn'
+        else:
+            return None
 
     def visualize_grid(self, path=None):
         fig, ax = plt.subplots(figsize=(8, 8))

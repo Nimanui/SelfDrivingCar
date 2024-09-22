@@ -42,7 +42,7 @@ class TestPathFinder(unittest.TestCase):
         goal = (2, 2)
         path = pathfinder.find_path(start, goal)
         commands = pathfinder.path_to_commands(path)
-        self.assertEqual(commands, ['backward', 'backward', 'right', 'right'],
+        self.assertEqual(commands, ['uturn', 'forward', 'forward', 'left', 'forward', 'forward'],
                          "Error: Validate the generated commands")
 
     def test_path_around_obstacles(self):
@@ -62,7 +62,7 @@ class TestPathFinder(unittest.TestCase):
         goal = (2, 2)
         path = pathfinder.find_path(start, goal)
         commands = pathfinder.path_to_commands(path)
-        self.assertEqual(commands,  ['person', 'stop', 'backward', 'backward', 'right', 'right'],
+        self.assertEqual(commands,  ['person', 'stop', 'uturn', 'forward', 'forward', 'left', 'forward', 'forward'],
                          "Error: Validate the generated commands")
 
     def test_car_size1(self):
