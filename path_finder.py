@@ -6,21 +6,36 @@ from scipy.ndimage import zoom
 import time
 
 class PathFinder:
-    def __init__(self, grid_in, image_obstacles, car_size=1, scale_factor=1, count=0):
+    def __init__(self, grid_in, goal, image_obstacles, car_size=1, scale_factor=1, count=0):
         """
         Initialize with the grid and car size.
 
         Parameters:
-        - grid: 2D numpy array (0 = free space, 1 = obstacle)
+        - grid_in: 2D numpy array (0 = free space, 1 = obstacle)
+        - obstacle_map: 2D numpy array (0 = free space, 1 = obstacle)
+        - goal: global goal location on grid_in
         - image_obstacles: number list (1 = stop sign, 2 = person, 3 = obstacle)
         - car_size: size of the car in grid cells (default 1)
         - scale_factor: scale down the grid by n factor
         """
         self.grid = self.scale_down_grid(grid_in, scale_factor)
+        self.goal = goal
         self.car_size = car_size
         self.graph = self._grid_to_graph(self.grid)
         self.image_obstacles = image_obstacles
         self.count = count
+        self.direction = 0
+
+    def add_obstacles(self, obstacle_map, current_location, orientation):
+        """
+        function to add obstacles from the obstacle_map on top of the global map
+        :param obstacle_map: 2D numpy map to be added
+        :param current_location: location of the car
+        :param orientation: direction the car is point in (0 up, 1 right, 2 down, 3 left)
+        :return:
+        """
+        scaled_map = self.scale_down_grid(obstacle_map, self.scale_factor)
+
 
     def scale_down_grid(self, grid, scale_factor):
         """
