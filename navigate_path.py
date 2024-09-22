@@ -219,6 +219,35 @@ def increment_goal_by_direction(command, goal):
                 ORIENTATION = 2
     return goal
 
+def translate_commands(command, next_command):
+    if command == "forward":
+        if next_command == "forward":
+            return "forward"
+        elif next_command == "left":
+            return "left"
+        elif next_command == "right":
+            return "right"
+    if command == "right":
+        if next_command == "forward":
+            return "left"
+        elif next_command == "right":
+            return "forward"
+        elif next_command == "backward":
+            return "right"
+    if command == "backward":
+        if next_command == "right":
+            return "left"
+        elif next_command == "backward":
+            return "forward"
+        elif next_command == "left":
+            return "right"
+    if command == "left":
+        if next_command == "backward":
+            return "left"
+        elif next_command == "left":
+            return "forward"
+        elif next_command == "forward":
+            return "right"
 
 def read_command_picarx(px, command, start, goal):
     global PERSON_PAUSE, TIME_PAUSE, START_TURN, TURNING
@@ -299,9 +328,14 @@ if __name__ == "__main__":
                         step_count = 0
                         while step_count < command_steps:
                             command = commands.pop(0)
+                            next_command = command
+                            if commands:
+                                next_command = commands[0]
+                            real_command = translate_commands(command, next_command)
                             print(command)
                             print(commands)
-                            current_location, goal = read_command_picarx(advMap.px, command, current_location, goal)
+                            print(real_command)
+                            current_location, goal = read_command_picarx(advMap.px, real_command, current_location, goal)
                             if PERSON_PAUSE or current_location == goal:
                                 step_count += command_steps
                                 if current_location == goal:
