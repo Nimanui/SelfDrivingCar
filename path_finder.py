@@ -105,6 +105,8 @@ class PathFinder:
         Returns:
         - path: list of positions from start to goal
         """
+        print(f"Start: {self.grid[start]}")
+        print(f"Goal: {self.grid[goal]}")
         try:
             path = nx.astar_path(self.graph, start, goal, heuristic=self._heuristic)
             return path
@@ -130,10 +132,10 @@ class PathFinder:
             # Determine the direction
             if delta_column == -1 and delta_row == 0:
                 # done
-                commands.append("right")
+                commands.append("left")
             elif delta_column == 1 and delta_row == 0:
                 # done
-                commands.append("left")
+                commands.append("right")
             elif delta_column == 0 and delta_row == 1:
                 commands.append("backward")
             elif delta_column == 0 and delta_row == -1:
