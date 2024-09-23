@@ -61,7 +61,7 @@ class AdvancedMappingPX:
         self.detection_result_list = []
 
         self.model = 'efficientdet_lite0.tflite'
-        self.score_threshold = 0.30
+        self.score_threshold = 0.25
         self.max_results = 5
         self.image_obstacles = []
         # Initialize the object detection model
