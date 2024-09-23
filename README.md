@@ -7,6 +7,8 @@ for Picar-X
 for Picar 4WD
 `python3 navigate_path4wd.py`
 
+There is a sample file of the sort of output you can expect to see with the car running through a course "output12.txt".
+
 ## Test
 - Test advanced mapping in your computer with mocks:
 
