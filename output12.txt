@@ -1,0 +1,1138 @@
+vilib 0.3.8 launching ...
+picamera2 0.3.21
+Big map size(300, 200)
+Angle: -60, Distance: 108.36
+Updating grid at X=-44, Y=54, Distance=108.36, Theta=-1.0471975511965976
+Angle: -55, Distance: 108.86
+Updating grid at X=-40, Y=62, Distance=108.86, Theta=-0.9599310885968813
+Angle: -50, Distance: 108.9
+Updating grid at X=-34, Y=69, Distance=108.9, Theta=-0.8726646259971648
+Angle: -45, Distance: 181.83
+Updating grid at X=-79, Y=128, Distance=181.83, Theta=-0.7853981633974483
+Angle: -40, Distance: 181.89
+Updating grid at X=-67, Y=139, Distance=181.89, Theta=-0.6981317007977318
+Angle: -35, Distance: 110.23
+Updating grid at X=-14, Y=90, Distance=110.23, Theta=-0.6108652381980153
+Angle: -30, Distance: 109.51
+Updating grid at X=-5, Y=94, Distance=109.51, Theta=-0.5235987755982988
+Angle: -25, Distance: 108.99
+Updating grid at X=3, Y=98, Distance=108.99, Theta=-0.4363323129985824
+Angle: -20, Distance: 109.02
+Updating grid at X=12, Y=102, Distance=109.02, Theta=-0.3490658503988659
+Angle: -15, Distance: 109.03
+Updating grid at X=21, Y=105, Distance=109.03, Theta=-0.2617993877991494
+Angle: -10, Distance: 108.86
+Updating grid at X=31, Y=107, Distance=108.86, Theta=-0.17453292519943295
+Angle: -5, Distance: 108.41
+Updating grid at X=40, Y=107, Distance=108.41, Theta=-0.08726646259971647
+Angle: 0, Distance: 108.41
+Updating grid at X=49, Y=108, Distance=108.41, Theta=0.0
+stop, person
+Detection(bounding_box=BoundingBox(origin_x=1, origin_y=178, width=436, height=293), categories=[Category(index=None, score=0.27734375, display_name=None, category_name='person')], keypoints=[])
+Angle: 5, Distance: 108.82
+Updating grid at X=58, Y=108, Distance=108.82, Theta=0.08726646259971647
+Angle: 10, Distance: 108.76
+Updating grid at X=67, Y=107, Distance=108.76, Theta=0.17453292519943295
+Angle: 15, Distance: 108.89
+Updating grid at X=77, Y=105, Distance=108.89, Theta=0.2617993877991494
+Angle: 20, Distance: 108.8
+Updating grid at X=86, Y=102, Distance=108.8, Theta=0.3490658503988659
+Angle: 25, Distance: 109.22
+Updating grid at X=95, Y=98, Distance=109.22, Theta=0.4363323129985824
+Angle: 30, Distance: 109.18
+Updating grid at X=103, Y=94, Distance=109.18, Theta=0.5235987755982988
+Angle: 35, Distance: 109.58
+Updating grid at X=111, Y=89, Distance=109.58, Theta=0.6108652381980153
+Angle: 40, Distance: 110.47
+Updating grid at X=120, Y=84, Distance=110.47, Theta=0.6981317007977318
+Angle: 45, Distance: -2
+Updating grid at X=48, Y=-1, Distance=-2, Theta=0.7853981633974483
+Angle: 50, Distance: -2
+Updating grid at X=48, Y=-1, Distance=-2, Theta=0.8726646259971648
+Angle: 55, Distance: -2
+Updating grid at X=48, Y=-1, Distance=-2, Theta=0.9599310885968813
+Angle: 60, Distance: 82.94
+Updating grid at X=120, Y=41, Distance=82.94, Theta=1.0471975511965976
+[2]
+add_obstacles
+(60, 40)
+(20, 20)
+(58, 15)
+stuff
+object_map(20, 20)
+large_map(60, 40)
+found padding a: 2 b: 15 c: 38 d: 5
+trimmed map(60, 40)
+Start: 0.0
+Goal: 0.0
+['person', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'left', 'left', 'left', 'left', 'left', 'left', 'left', 'left', 'left', 'left']
+orientation command: forward
+forward
+['person', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'left', 'left', 'left', 'left', 'left', 'left', 'left', 'left', 'left', 'left']
+person
+PERSON!!!
+Current Location post command: (58, 15)
+Angle: 60, Distance: 81.61
+Updating grid at X=119, Y=40, Distance=81.61, Theta=1.0471975511965976
+Angle: 55, Distance: 81.58
+Updating grid at X=115, Y=46, Distance=81.58, Theta=0.9599310885968813
+Angle: 50, Distance: 82.59
+Updating grid at X=112, Y=53, Distance=82.59, Theta=0.8726646259971648
+Angle: 45, Distance: 94.84
+Updating grid at X=116, Y=67, Distance=94.84, Theta=0.7853981633974483
+Angle: 40, Distance: -2
+Updating grid at X=48, Y=-1, Distance=-2, Theta=0.6981317007977318
+Angle: 35, Distance: -2
+Updating grid at X=48, Y=-1, Distance=-2, Theta=0.6108652381980153
+Angle: 30, Distance: 110.86
+Updating grid at X=104, Y=96, Distance=110.86, Theta=0.5235987755982988
+Angle: 25, Distance: 110.01
+Updating grid at X=95, Y=99, Distance=110.01, Theta=0.4363323129985824
+Angle: 20, Distance: 109.16
+Updating grid at X=86, Y=102, Distance=109.16, Theta=0.3490658503988659
+Angle: 15, Distance: 109.15
+Updating grid at X=77, Y=105, Distance=109.15, Theta=0.2617993877991494
+Angle: 10, Distance: 108.85
+Updating grid at X=67, Y=107, Distance=108.85, Theta=0.17453292519943295
+Angle: 5, Distance: 108.9
+Updating grid at X=58, Y=108, Distance=108.9, Theta=0.08726646259971647
+Angle: 0, Distance: 108.81
+Updating grid at X=49, Y=108, Distance=108.81, Theta=0.0
+Detection(bounding_box=BoundingBox(origin_x=269, origin_y=261, width=152, height=37), categories=[Category(index=None, score=0.27734375, display_name=None, category_name='book')], keypoints=[])
+Angle: -5, Distance: 108.41
+Updating grid at X=40, Y=107, Distance=108.41, Theta=-0.08726646259971647
+Angle: -10, Distance: 108.38
+Updating grid at X=31, Y=106, Distance=108.38, Theta=-0.17453292519943295
+Angle: -15, Distance: 108.46
+Updating grid at X=21, Y=104, Distance=108.46, Theta=-0.2617993877991494
+Angle: -20, Distance: 108.49
+Updating grid at X=12, Y=101, Distance=108.49, Theta=-0.3490658503988659
+Angle: -25, Distance: 108.87
+Updating grid at X=3, Y=98, Distance=108.87, Theta=-0.4363323129985824
+Angle: -30, Distance: 109.07
+Updating grid at X=-5, Y=94, Distance=109.07, Theta=-0.5235987755982988
+Angle: -35, Distance: 108.98
+Updating grid at X=-13, Y=89, Distance=108.98, Theta=-0.6108652381980153
+Angle: -40, Distance: 109.5
+Updating grid at X=-21, Y=83, Distance=109.5, Theta=-0.6981317007977318
+Angle: -45, Distance: 110.41
+Updating grid at X=-29, Y=78, Distance=110.41, Theta=-0.7853981633974483
+Angle: -50, Distance: 181.5
+Updating grid at X=-90, Y=116, Distance=181.5, Theta=-0.8726646259971648
+Angle: -55, Distance: 181.44
+Updating grid at X=-99, Y=104, Distance=181.44, Theta=-0.9599310885968813
+Angle: -60, Distance: 108.92
+Updating grid at X=-45, Y=54, Distance=108.92, Theta=-1.0471975511965976
+[3]
+add_obstacles
+(60, 40)
+(20, 20)
+(58, 15)
+stuff
+object_map(20, 20)
+large_map(60, 40)
+found padding a: 2 b: 15 c: 38 d: 5
+trimmed map(60, 40)
+Start: 0.0
+Goal: 0.0
+['forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'left', 'left', 'left', 'left', 'left', 'left', 'left', 'left', 'left', 'left']
+orientation command: forward
+forward
+['forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'left', 'left', 'left', 'left', 'left', 'left', 'left', 'left', 'left', 'left']
+forward
+current_location: (57, 15)
+goal: (15, 5)
+Current Location post command: (57, 15)
+forward
+['forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'left', 'left', 'left', 'left', 'left', 'left', 'left', 'left', 'left', 'left']
+forward
+current_location: (56, 15)
+goal: (15, 5)
+Current Location post command: (56, 15)
+forward
+['forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'left', 'left', 'left', 'left', 'left', 'left', 'left', 'left', 'left', 'left']
+forward
+current_location: (55, 15)
+goal: (15, 5)
+Current Location post command: (55, 15)
+forward
+['forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'left', 'left', 'left', 'left', 'left', 'left', 'left', 'left', 'left', 'left']
+forward
+current_location: (54, 15)
+goal: (15, 5)
+Current Location post command: (54, 15)
+forward
+['forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'left', 'left', 'left', 'left', 'left', 'left', 'left', 'left', 'left', 'left']
+forward
+current_location: (53, 15)
+goal: (15, 5)
+Current Location post command: (53, 15)
+forward
+['forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'left', 'left', 'left', 'left', 'left', 'left', 'left', 'left', 'left', 'left']
+forward
+current_location: (52, 15)
+goal: (15, 5)
+Current Location post command: (52, 15)
+forward
+['forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'left', 'left', 'left', 'left', 'left', 'left', 'left', 'left', 'left', 'left']
+forward
+current_location: (51, 15)
+goal: (15, 5)
+Current Location post command: (51, 15)
+forward
+['forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'left', 'left', 'left', 'left', 'left', 'left', 'left', 'left', 'left', 'left']
+forward
+current_location: (50, 15)
+goal: (15, 5)
+Current Location post command: (50, 15)
+forward
+['forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'left', 'left', 'left', 'left', 'left', 'left', 'left', 'left', 'left', 'left']
+forward
+current_location: (49, 15)
+goal: (15, 5)
+Current Location post command: (49, 15)
+forward
+['forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'left', 'left', 'left', 'left', 'left', 'left', 'left', 'left', 'left', 'left']
+forward
+current_location: (48, 15)
+goal: (15, 5)
+Current Location post command: (48, 15)
+forward
+['forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'left', 'left', 'left', 'left', 'left', 'left', 'left', 'left', 'left', 'left']
+forward
+current_location: (47, 15)
+goal: (15, 5)
+Current Location post command: (47, 15)
+forward
+['forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'left', 'left', 'left', 'left', 'left', 'left', 'left', 'left', 'left', 'left']
+forward
+current_location: (46, 15)
+goal: (15, 5)
+Current Location post command: (46, 15)
+forward
+['forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'left', 'left', 'left', 'left', 'left', 'left', 'left', 'left', 'left', 'left']
+forward
+current_location: (45, 15)
+goal: (15, 5)
+Current Location post command: (45, 15)
+forward
+['forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'left', 'left', 'left', 'left', 'left', 'left', 'left', 'left', 'left', 'left']
+forward
+current_location: (44, 15)
+goal: (15, 5)
+Current Location post command: (44, 15)
+forward
+['forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'left', 'left', 'left', 'left', 'left', 'left', 'left', 'left', 'left', 'left']
+forward
+current_location: (43, 15)
+goal: (15, 5)
+Current Location post command: (43, 15)
+forward
+['forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'left', 'left', 'left', 'left', 'left', 'left', 'left', 'left', 'left', 'left']
+forward
+current_location: (42, 15)
+goal: (15, 5)
+Current Location post command: (42, 15)
+forward
+['forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'left', 'left', 'left', 'left', 'left', 'left', 'left', 'left', 'left', 'left']
+forward
+current_location: (41, 15)
+goal: (15, 5)
+Current Location post command: (41, 15)
+forward
+['forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'left', 'left', 'left', 'left', 'left', 'left', 'left', 'left', 'left', 'left']
+forward
+current_location: (40, 15)
+goal: (15, 5)
+Current Location post command: (40, 15)
+forward
+['forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'left', 'left', 'left', 'left', 'left', 'left', 'left', 'left', 'left', 'left']
+forward
+current_location: (39, 15)
+goal: (15, 5)
+Current Location post command: (39, 15)
+forward
+['forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'left', 'left', 'left', 'left', 'left', 'left', 'left', 'left', 'left', 'left']
+forward
+current_location: (38, 15)
+goal: (15, 5)
+Current Location post command: (38, 15)
+Angle: -60, Distance: 68.84
+Updating grid at X=-10, Y=34, Distance=68.84, Theta=-1.0471975511965976
+Angle: -55, Distance: 67.09
+Updating grid at X=-5, Y=38, Distance=67.09, Theta=-0.9599310885968813
+Angle: -50, Distance: 67.98
+Updating grid at X=-3, Y=43, Distance=67.98, Theta=-0.8726646259971648
+Angle: -45, Distance: 66.59
+Updating grid at X=2, Y=47, Distance=66.59, Theta=-0.7853981633974483
+Angle: -40, Distance: 66.33
+Updating grid at X=7, Y=50, Distance=66.33, Theta=-0.6981317007977318
+Angle: -35, Distance: 65.49
+Updating grid at X=12, Y=53, Distance=65.49, Theta=-0.6108652381980153
+Angle: -30, Distance: 65.27
+Updating grid at X=17, Y=56, Distance=65.27, Theta=-0.5235987755982988
+Angle: -25, Distance: 65.2
+Updating grid at X=22, Y=59, Distance=65.2, Theta=-0.4363323129985824
+Angle: -20, Distance: 65.23
+Updating grid at X=27, Y=61, Distance=65.23, Theta=-0.3490658503988659
+Angle: -15, Distance: 64.89
+Updating grid at X=33, Y=62, Distance=64.89, Theta=-0.2617993877991494
+Angle: -10, Distance: 64.91
+Updating grid at X=38, Y=63, Distance=64.91, Theta=-0.17453292519943295
+Angle: -5, Distance: 65.43
+Updating grid at X=44, Y=65, Distance=65.43, Theta=-0.08726646259971647
+Angle: 0, Distance: 64.96
+Updating grid at X=49, Y=64, Distance=64.96, Theta=0.0
+Angle: 5, Distance: 64.96
+Updating grid at X=54, Y=64, Distance=64.96, Theta=0.08726646259971647
+Detection(bounding_box=BoundingBox(origin_x=544, origin_y=357, width=84, height=84), categories=[Category(index=None, score=0.3125, display_name=None, category_name='cup')], keypoints=[])
+Detection(bounding_box=BoundingBox(origin_x=175, origin_y=157, width=428, height=315), categories=[Category(index=None, score=0.27734375, display_name=None, category_name='laptop')], keypoints=[])
+Angle: 10, Distance: 64.95
+Updating grid at X=60, Y=63, Distance=64.95, Theta=0.17453292519943295
+Detection(bounding_box=BoundingBox(origin_x=232, origin_y=153, width=395, height=325), categories=[Category(index=None, score=0.3515625, display_name=None, category_name='chair')], keypoints=[])
+Angle: 15, Distance: 65.28
+Updating grid at X=65, Y=63, Distance=65.28, Theta=0.2617993877991494
+Angle: 20, Distance: 65.37
+Updating grid at X=71, Y=61, Distance=65.37, Theta=0.3490658503988659
+Angle: 25, Distance: 65.36
+Updating grid at X=76, Y=59, Distance=65.36, Theta=0.4363323129985824
+Angle: 30, Distance: 65.39
+Updating grid at X=81, Y=56, Distance=65.39, Theta=0.5235987755982988
+Angle: 35, Distance: 65.76
+Updating grid at X=86, Y=53, Distance=65.76, Theta=0.6108652381980153
+Angle: 40, Distance: 66.63
+Updating grid at X=91, Y=51, Distance=66.63, Theta=0.6981317007977318
+Angle: 45, Distance: 68.9
+Updating grid at X=97, Y=48, Distance=68.9, Theta=0.7853981633974483
+Angle: 50, Distance: -2
+Updating grid at X=48, Y=-1, Distance=-2, Theta=0.8726646259971648
+Angle: 55, Distance: -2
+Updating grid at X=48, Y=-1, Distance=-2, Theta=0.9599310885968813
+Angle: 60, Distance: 78.98
+Updating grid at X=117, Y=39, Distance=78.98, Theta=1.0471975511965976
+[3, 3, 3]
+add_obstacles
+(60, 40)
+(20, 20)
+(38, 15)
+stuff
+object_map(20, 20)
+large_map(60, 40)
+found padding a: 22 b: 15 c: 18 d: 5
+trimmed map(60, 40)
+Start: 0.0
+Goal: 0.0
+['forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'left', 'left', 'left', 'left', 'left', 'left', 'left', 'left', 'left', 'left', 'left', 'left', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'right', 'right']
+orientation command: forward
+forward
+['forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'left', 'left', 'left', 'left', 'left', 'left', 'left', 'left', 'left', 'left', 'left', 'left', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'right', 'right']
+forward
+current_location: (37, 15)
+goal: (15, 5)
+Current Location post command: (37, 15)
+forward
+['forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'left', 'left', 'left', 'left', 'left', 'left', 'left', 'left', 'left', 'left', 'left', 'left', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'right', 'right']
+forward
+current_location: (36, 15)
+goal: (15, 5)
+Current Location post command: (36, 15)
+forward
+['forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'left', 'left', 'left', 'left', 'left', 'left', 'left', 'left', 'left', 'left', 'left', 'left', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'right', 'right']
+forward
+current_location: (35, 15)
+goal: (15, 5)
+Current Location post command: (35, 15)
+forward
+['forward', 'forward', 'forward', 'forward', 'forward', 'left', 'left', 'left', 'left', 'left', 'left', 'left', 'left', 'left', 'left', 'left', 'left', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'right', 'right']
+forward
+current_location: (34, 15)
+goal: (15, 5)
+Current Location post command: (34, 15)
+forward
+['forward', 'forward', 'forward', 'forward', 'left', 'left', 'left', 'left', 'left', 'left', 'left', 'left', 'left', 'left', 'left', 'left', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'right', 'right']
+forward
+current_location: (33, 15)
+goal: (15, 5)
+Current Location post command: (33, 15)
+forward
+['forward', 'forward', 'forward', 'left', 'left', 'left', 'left', 'left', 'left', 'left', 'left', 'left', 'left', 'left', 'left', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'right', 'right']
+forward
+current_location: (32, 15)
+goal: (15, 5)
+Current Location post command: (32, 15)
+forward
+['forward', 'forward', 'left', 'left', 'left', 'left', 'left', 'left', 'left', 'left', 'left', 'left', 'left', 'left', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'right', 'right']
+forward
+current_location: (31, 15)
+goal: (15, 5)
+Current Location post command: (31, 15)
+forward
+['forward', 'left', 'left', 'left', 'left', 'left', 'left', 'left', 'left', 'left', 'left', 'left', 'left', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'right', 'right']
+forward
+current_location: (30, 15)
+goal: (15, 5)
+Current Location post command: (30, 15)
+forward
+['left', 'left', 'left', 'left', 'left', 'left', 'left', 'left', 'left', 'left', 'left', 'left', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'right', 'right']
+left
+current_location: (29, 14)
+goal: (15, 5)
+Current Location post command: (29, 14)
+left
+['left', 'left', 'left', 'left', 'left', 'left', 'left', 'left', 'left', 'left', 'left', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'right', 'right']
+forward
+current_location: (29, 13)
+goal: (15, 5)
+Current Location post command: (29, 13)
+left
+['left', 'left', 'left', 'left', 'left', 'left', 'left', 'left', 'left', 'left', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'right', 'right']
+forward
+current_location: (29, 12)
+goal: (15, 5)
+Current Location post command: (29, 12)
+left
+['left', 'left', 'left', 'left', 'left', 'left', 'left', 'left', 'left', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'right', 'right']
+forward
+current_location: (29, 11)
+goal: (15, 5)
+Current Location post command: (29, 11)
+left
+['left', 'left', 'left', 'left', 'left', 'left', 'left', 'left', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'right', 'right']
+forward
+current_location: (29, 10)
+goal: (15, 5)
+Current Location post command: (29, 10)
+left
+['left', 'left', 'left', 'left', 'left', 'left', 'left', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'right', 'right']
+forward
+current_location: (29, 9)
+goal: (15, 5)
+Current Location post command: (29, 9)
+left
+['left', 'left', 'left', 'left', 'left', 'left', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'right', 'right']
+forward
+current_location: (29, 8)
+goal: (15, 5)
+Current Location post command: (29, 8)
+left
+['left', 'left', 'left', 'left', 'left', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'right', 'right']
+forward
+current_location: (29, 7)
+goal: (15, 5)
+Current Location post command: (29, 7)
+left
+['left', 'left', 'left', 'left', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'right', 'right']
+forward
+current_location: (29, 6)
+goal: (15, 5)
+Current Location post command: (29, 6)
+left
+['left', 'left', 'left', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'right', 'right']
+forward
+current_location: (29, 5)
+goal: (15, 5)
+Current Location post command: (29, 5)
+left
+['left', 'left', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'right', 'right']
+forward
+current_location: (29, 4)
+goal: (15, 5)
+Current Location post command: (29, 4)
+left
+['left', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'right', 'right']
+forward
+current_location: (29, 3)
+goal: (15, 5)
+Current Location post command: (29, 3)
+Angle: 60, Distance: 44.7
+Updating grid at X=87, Y=22, Distance=44.7, Theta=1.0471975511965976
+Angle: 55, Distance: 43.43
+Updating grid at X=84, Y=24, Distance=43.43, Theta=0.9599310885968813
+Angle: 50, Distance: 43.32
+Updating grid at X=82, Y=27, Distance=43.32, Theta=0.8726646259971648
+Angle: 45, Distance: 44.37
+Updating grid at X=80, Y=31, Distance=44.37, Theta=0.7853981633974483
+Angle: 40, Distance: 44.53
+Updating grid at X=77, Y=34, Distance=44.53, Theta=0.6981317007977318
+Angle: 35, Distance: 44.22
+Updating grid at X=74, Y=36, Distance=44.22, Theta=0.6108652381980153
+Angle: 30, Distance: 46.22
+Updating grid at X=72, Y=40, Distance=46.22, Theta=0.5235987755982988
+Angle: 25, Distance: -2
+Updating grid at X=49, Y=-1, Distance=-2, Theta=0.4363323129985824
+Angle: 20, Distance: 84.76
+Updating grid at X=77, Y=79, Distance=84.76, Theta=0.3490658503988659
+Angle: 15, Distance: 84.22
+Updating grid at X=70, Y=81, Distance=84.22, Theta=0.2617993877991494
+Angle: 10, Distance: 83.2
+Updating grid at X=63, Y=81, Distance=83.2, Theta=0.17453292519943295
+Detection(bounding_box=BoundingBox(origin_x=18, origin_y=124, width=602, height=356), categories=[Category(index=None, score=0.27734375, display_name=None, category_name='refrigerator')], keypoints=[])
+Angle: 5, Distance: 82.76
+Updating grid at X=56, Y=82, Distance=82.76, Theta=0.08726646259971647
+Angle: 0, Distance: 82.3
+Updating grid at X=49, Y=82, Distance=82.3, Theta=0.0
+Angle: -5, Distance: 82.28
+Updating grid at X=42, Y=81, Distance=82.28, Theta=-0.08726646259971647
+Detection(bounding_box=BoundingBox(origin_x=0, origin_y=1, width=635, height=313), categories=[Category(index=None, score=0.37109375, display_name=None, category_name='tv')], keypoints=[])
+Detection(bounding_box=BoundingBox(origin_x=7, origin_y=134, width=624, height=337), categories=[Category(index=None, score=0.3125, display_name=None, category_name='bed')], keypoints=[])
+Angle: -10, Distance: 82.37
+Updating grid at X=35, Y=81, Distance=82.37, Theta=-0.17453292519943295
+Detection(bounding_box=BoundingBox(origin_x=2, origin_y=170, width=635, height=302), categories=[Category(index=None, score=0.5, display_name=None, category_name='bed')], keypoints=[])
+Detection(bounding_box=BoundingBox(origin_x=0, origin_y=324, width=609, height=150), categories=[Category(index=None, score=0.37109375, display_name=None, category_name='bed')], keypoints=[])
+Detection(bounding_box=BoundingBox(origin_x=2, origin_y=7, width=635, height=319), categories=[Category(index=None, score=0.33203125, display_name=None, category_name='tv')], keypoints=[])
+Angle: -15, Distance: 38.78
+Updating grid at X=39, Y=37, Distance=38.78, Theta=-0.2617993877991494
+Angle: -20, Distance: 38.74
+Updating grid at X=36, Y=36, Distance=38.74, Theta=-0.3490658503988659
+Angle: -25, Distance: 38.77
+Updating grid at X=33, Y=35, Distance=38.77, Theta=-0.4363323129985824
+Angle: -30, Distance: 39.3
+Updating grid at X=30, Y=34, Distance=39.3, Theta=-0.5235987755982988
+Angle: -35, Distance: 39.73
+Updating grid at X=27, Y=32, Distance=39.73, Theta=-0.6108652381980153
+Angle: -40, Distance: 84.94
+Updating grid at X=-5, Y=65, Distance=84.94, Theta=-0.6981317007977318
+Angle: -45, Distance: 80.22
+Updating grid at X=-7, Y=56, Distance=80.22, Theta=-0.7853981633974483
+Angle: -50, Distance: 80.2
+Updating grid at X=-12, Y=51, Distance=80.2, Theta=-0.8726646259971648
+Angle: -55, Distance: 80.61
+Updating grid at X=-17, Y=46, Distance=80.61, Theta=-0.9599310885968813
+Angle: -60, Distance: 80.24
+Updating grid at X=-20, Y=40, Distance=80.24, Theta=-1.0471975511965976
+[3, 3, 3, 3, 3, 3]
+add_obstacles
+(60, 40)
+(20, 20)
+(29, 3)
+stuff
+object_map(20, 20)
+large_map(60, 40)
+found padding a: 31 b: 27 c: 9 d: -7
+trimmed map(60, 40)
+Start: 0.0
+Goal: 0.0
+['forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'right', 'right']
+orientation command: left
+left
+['forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'right', 'right']
+right
+current_location: (30, 6)
+goal: (15, 5)
+Current Location post command: (30, 6)
+left
+['forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'right', 'right']
+right
+current_location: (30, 6)
+goal: (15, 5)
+Current Location post command: (30, 6)
+forward
+['forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'right', 'right']
+forward
+current_location: (29, 6)
+goal: (15, 5)
+Current Location post command: (29, 6)
+forward
+['forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'right', 'right']
+forward
+current_location: (28, 6)
+goal: (15, 5)
+Current Location post command: (28, 6)
+forward
+['forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'right', 'right']
+forward
+current_location: (27, 6)
+goal: (15, 5)
+Current Location post command: (27, 6)
+forward
+['forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'right', 'right']
+forward
+current_location: (26, 6)
+goal: (15, 5)
+Current Location post command: (26, 6)
+forward
+['forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'right', 'right']
+forward
+current_location: (25, 6)
+goal: (15, 5)
+Current Location post command: (25, 6)
+forward
+['forward', 'forward', 'forward', 'forward', 'forward', 'forward', 'right', 'right']
+forward
+current_location: (24, 6)
+goal: (15, 5)
+Current Location post command: (24, 6)
+forward
+['forward', 'forward', 'forward', 'forward', 'forward', 'right', 'right']
+forward
+current_location: (23, 6)
+goal: (15, 5)
+Current Location post command: (23, 6)
+forward
+['forward', 'forward', 'forward', 'forward', 'right', 'right']
+forward
+current_location: (22, 6)
+goal: (15, 5)
+Current Location post command: (22, 6)
+forward
+['forward', 'forward', 'forward', 'right', 'right']
+forward
+current_location: (21, 6)
+goal: (15, 5)
+Current Location post command: (21, 6)
+forward
+['forward', 'forward', 'right', 'right']
+forward
+current_location: (20, 6)
+goal: (15, 5)
+Current Location post command: (20, 6)
+forward
+['forward', 'right', 'right']
+forward
+current_location: (19, 6)
+goal: (15, 5)
+Current Location post command: (19, 6)
+forward
+['right', 'right']
+right
+current_location: (18, 7)
+goal: (15, 5)
+Current Location post command: (18, 7)
+right
+['right']
+forward
+current_location: (18, 8)
+goal: (15, 5)
+Current Location post command: (18, 8)
+right
+[]
+forward
+current_location: (18, 9)
+goal: (15, 5)
+Current Location post command: (18, 9)
+Angle: -60, Distance: 83.58
+Updating grid at X=-23, Y=41, Distance=83.58, Theta=-1.0471975511965976
+Angle: -55, Distance: 82.41
+Updating grid at X=-18, Y=47, Distance=82.41, Theta=-0.9599310885968813
+Angle: -50, Distance: 82.68
+Updating grid at X=-14, Y=53, Distance=82.68, Theta=-0.8726646259971648
+Angle: -45, Distance: 82.03
+Updating grid at X=-9, Y=58, Distance=82.03, Theta=-0.7853981633974483
+Angle: -40, Distance: 82.07
+Updating grid at X=-3, Y=62, Distance=82.07, Theta=-0.6981317007977318
+Angle: -35, Distance: 81.97
+Updating grid at X=2, Y=67, Distance=81.97, Theta=-0.6108652381980153
+Angle: -30, Distance: 82.02
+Updating grid at X=8, Y=71, Distance=82.02, Theta=-0.5235987755982988
+Angle: -25, Distance: 81.89
+Updating grid at X=15, Y=74, Distance=81.89, Theta=-0.4363323129985824
+Angle: -20, Distance: 81.41
+Updating grid at X=22, Y=76, Distance=81.41, Theta=-0.3490658503988659
+Angle: -15, Distance: 82.07
+Updating grid at X=28, Y=79, Distance=82.07, Theta=-0.2617993877991494
+Angle: -10, Distance: 81.79
+Updating grid at X=35, Y=80, Distance=81.79, Theta=-0.17453292519943295
+Angle: -5, Distance: 82.23
+Updating grid at X=42, Y=81, Distance=82.23, Theta=-0.08726646259971647
+Angle: 0, Distance: 82.3
+Updating grid at X=49, Y=82, Distance=82.3, Theta=0.0
+Angle: 5, Distance: 82.25
+Updating grid at X=56, Y=81, Distance=82.25, Theta=0.08726646259971647
+Angle: 10, Distance: 83.18
+Updating grid at X=63, Y=81, Distance=83.18, Theta=0.17453292519943295
+Angle: 15, Distance: 85.29
+Updating grid at X=71, Y=82, Distance=85.29, Theta=0.2617993877991494
+Angle: 20, Distance: 261.76
+Updating grid at X=138, Y=245, Distance=261.76, Theta=0.3490658503988659
+Angle: 25, Distance: 261.27
+Updating grid at X=159, Y=236, Distance=261.27, Theta=0.4363323129985824
+Angle: 30, Distance: 32.89
+Updating grid at X=65, Y=28, Distance=32.89, Theta=0.5235987755982988
+Angle: 35, Distance: 22.71
+Updating grid at X=62, Y=18, Distance=22.71, Theta=0.6108652381980153
+Angle: 40, Distance: 22.82
+Updating grid at X=63, Y=17, Distance=22.82, Theta=0.6981317007977318
+Angle: 45, Distance: 21.89
+Updating grid at X=64, Y=15, Distance=21.89, Theta=0.7853981633974483
+Angle: 50, Distance: 21.79
+Updating grid at X=65, Y=14, Distance=21.79, Theta=0.8726646259971648
+Angle: 55, Distance: 21.84
+Updating grid at X=66, Y=12, Distance=21.84, Theta=0.9599310885968813
+Angle: 60, Distance: 20.84
+Updating grid at X=67, Y=10, Distance=20.84, Theta=1.0471975511965976
+[]
+add_obstacles
+(60, 40)
+(20, 20)
+(18, 9)
+stuff
+object_map(20, 20)
+large_map(60, 40)
+found padding a: 42 b: 21 c: -2 d: -1
+trimmed map(60, 40)
+Start: 0.0
+Goal: 0.0
+['forward', 'left', 'left', 'left', 'left']
+orientation command: right
+right
+['forward', 'left', 'left', 'left', 'left']
+left
+current_location: (19, 10)
+goal: (15, 5)
+Current Location post command: (19, 10)
+right
+['forward', 'left', 'left', 'left', 'left']
+left
+current_location: (19, 10)
+goal: (15, 5)
+Current Location post command: (19, 10)
+forward
+['left', 'left', 'left', 'left']
+left
+current_location: (19, 10)
+goal: (15, 5)
+Current Location post command: (19, 10)
+left
+['left', 'left', 'left']
+forward
+current_location: (18, 10)
+goal: (15, 5)
+Current Location post command: (18, 10)
+left
+['left', 'left']
+forward
+current_location: (17, 10)
+goal: (15, 5)
+Current Location post command: (17, 10)
+left
+['left']
+forward
+current_location: (16, 10)
+goal: (15, 5)
+Current Location post command: (16, 10)
+left
+[]
+forward
+current_location: (15, 10)
+goal: (15, 5)
+Current Location post command: (15, 10)
+Angle: 60, Distance: 45.35
+Updating grid at X=88, Y=22, Distance=45.35, Theta=1.0471975511965976
+Angle: 55, Distance: 44.53
+Updating grid at X=85, Y=25, Distance=44.53, Theta=0.9599310885968813
+Angle: 50, Distance: 45.05
+Updating grid at X=83, Y=28, Distance=45.05, Theta=0.8726646259971648
+Angle: 45, Distance: 45.21
+Updating grid at X=80, Y=31, Distance=45.21, Theta=0.7853981633974483
+Angle: 40, Distance: 45.56
+Updating grid at X=78, Y=34, Distance=45.56, Theta=0.6981317007977318
+Angle: 35, Distance: 46.45
+Updating grid at X=75, Y=38, Distance=46.45, Theta=0.6108652381980153
+Angle: 30, Distance: 46.66
+Updating grid at X=72, Y=40, Distance=46.66, Theta=0.5235987755982988
+Angle: 25, Distance: 57.88
+Updating grid at X=73, Y=52, Distance=57.88, Theta=0.4363323129985824
+Angle: 20, Distance: 56.59
+Updating grid at X=68, Y=53, Distance=56.59, Theta=0.3490658503988659
+Angle: 15, Distance: 56.68
+Updating grid at X=63, Y=54, Distance=56.68, Theta=0.2617993877991494
+Angle: 10, Distance: 130.37
+Updating grid at X=71, Y=128, Distance=130.37, Theta=0.17453292519943295
+Angle: 5, Distance: 77.28
+Updating grid at X=55, Y=76, Distance=77.28, Theta=0.08726646259971647
+Angle: 0, Distance: 102.23
+Updating grid at X=49, Y=102, Distance=102.23, Theta=0.0
+Angle: -5, Distance: 103.14
+Updating grid at X=41, Y=102, Distance=103.14, Theta=-0.08726646259971647
+Angle: -10, Distance: 102.39
+Updating grid at X=32, Y=100, Distance=102.39, Theta=-0.17453292519943295
+stop, person
+Detection(bounding_box=BoundingBox(origin_x=110, origin_y=437, width=57, height=40), categories=[Category(index=None, score=0.27734375, display_name=None, category_name='person')], keypoints=[])
+Angle: -15, Distance: 165.31
+Updating grid at X=7, Y=159, Distance=165.31, Theta=-0.2617993877991494
+Angle: -20, Distance: 164.53
+Updating grid at X=-7, Y=154, Distance=164.53, Theta=-0.3490658503988659
+Angle: -25, Distance: 171.58
+Updating grid at X=-23, Y=155, Distance=171.58, Theta=-0.4363323129985824
+Angle: -30, Distance: 163.96
+Updating grid at X=-32, Y=141, Distance=163.96, Theta=-0.5235987755982988
+Angle: -35, Distance: 164.02
+Updating grid at X=-45, Y=134, Distance=164.02, Theta=-0.6108652381980153
+Angle: -40, Distance: 163.98
+Updating grid at X=-56, Y=125, Distance=163.98, Theta=-0.6981317007977318
+Angle: -45, Distance: 163.99
+Updating grid at X=-66, Y=115, Distance=163.99, Theta=-0.7853981633974483
+Angle: -50, Distance: 164.46
+Updating grid at X=-76, Y=105, Distance=164.46, Theta=-0.8726646259971648
+Angle: -55, Distance: 163.94
+Updating grid at X=-85, Y=94, Distance=163.94, Theta=-0.9599310885968813
+Angle: -60, Distance: 164.43
+Updating grid at X=-93, Y=82, Distance=164.43, Theta=-1.0471975511965976
+[2]
+add_obstacles
+(60, 40)
+(20, 20)
+(15, 10)
+stuff
+object_map(20, 20)
+large_map(60, 40)
+found padding a: 45 b: 20 c: -5 d: 0
+trimmed map(60, 40)
+Start: 0.0
+Goal: 0.0
+['left']
+orientation command: forward
+forward
+['left']
+left
+current_location: (14, 9)
+goal: (15, 5)
+Current Location post command: (14, 9)
+forward
+['left']
+left
+current_location: (14, 9)
+goal: (15, 5)
+Current Location post command: (14, 9)
+left
+[]
+forward
+current_location: (14, 8)
+goal: (15, 5)
+Current Location post command: (14, 8)
+Angle: -60, Distance: -2
+Updating grid at X=50, Y=-1, Distance=-2, Theta=-1.0471975511965976
+Angle: -55, Distance: 149.05
+Updating grid at X=-73, Y=85, Distance=149.05, Theta=-0.9599310885968813
+Angle: -50, Distance: 148.34
+Updating grid at X=-64, Y=95, Distance=148.34, Theta=-0.8726646259971648
+Angle: -45, Distance: 148.32
+Updating grid at X=-55, Y=104, Distance=148.32, Theta=-0.7853981633974483
+Angle: -40, Distance: 148.22
+Updating grid at X=-46, Y=113, Distance=148.22, Theta=-0.6981317007977318
+Angle: -35, Distance: 148.15
+Updating grid at X=-35, Y=121, Distance=148.15, Theta=-0.6108652381980153
+Angle: -30, Distance: 148.28
+Updating grid at X=-25, Y=128, Distance=148.28, Theta=-0.5235987755982988
+Angle: -25, Distance: 148.84
+Updating grid at X=-13, Y=134, Distance=148.84, Theta=-0.4363323129985824
+Angle: -20, Distance: 149.15
+Updating grid at X=-2, Y=140, Distance=149.15, Theta=-0.3490658503988659
+Angle: -15, Distance: 149.7
+Updating grid at X=11, Y=144, Distance=149.7, Theta=-0.2617993877991494
+Angle: -10, Distance: 149.57
+Updating grid at X=24, Y=147, Distance=149.57, Theta=-0.17453292519943295
+Angle: -5, Distance: 132.35
+Updating grid at X=38, Y=131, Distance=132.35, Theta=-0.08726646259971647
+Angle: 0, Distance: 131.85
+Updating grid at X=49, Y=131, Distance=131.85, Theta=0.0
+Angle: 5, Distance: 130.9
+Updating grid at X=60, Y=130, Distance=130.9, Theta=0.08726646259971647
+Angle: 10, Distance: 107.77
+Updating grid at X=67, Y=106, Distance=107.77, Theta=0.17453292519943295
+Angle: 15, Distance: 86.96
+Updating grid at X=71, Y=83, Distance=86.96, Theta=0.2617993877991494
+Angle: 20, Distance: 87.0
+Updating grid at X=78, Y=81, Distance=87.0, Theta=0.3490658503988659
+Angle: 25, Distance: 86.46
+Updating grid at X=85, Y=78, Distance=86.46, Theta=0.4363323129985824
+Angle: 30, Distance: 87.31
+Updating grid at X=92, Y=75, Distance=87.31, Theta=0.5235987755982988
+Angle: 35, Distance: 87.8
+Updating grid at X=99, Y=71, Distance=87.8, Theta=0.6108652381980153
+Angle: 40, Distance: 104.98
+Updating grid at X=116, Y=80, Distance=104.98, Theta=0.6981317007977318
+Angle: 45, Distance: 104.92
+Updating grid at X=123, Y=74, Distance=104.92, Theta=0.7853981633974483
+Angle: 50, Distance: 124.48
+Updating grid at X=144, Y=80, Distance=124.48, Theta=0.8726646259971648
+Angle: 55, Distance: 124.37
+Updating grid at X=150, Y=71, Distance=124.37, Theta=0.9599310885968813
+Angle: 60, Distance: 124.8
+Updating grid at X=157, Y=62, Distance=124.8, Theta=1.0471975511965976
+[]
+add_obstacles
+(60, 40)
+(20, 20)
+(14, 8)
+stuff
+object_map(20, 20)
+large_map(60, 40)
+found padding a: 46 b: 22 c: -6 d: -2
+trimmed map(60, 40)
+Start: 0.0
+Goal: 0.0
+['left']
+orientation command: left
+left
+['left']
+forward
+current_location: (14, 7)
+goal: (15, 5)
+Current Location post command: (14, 7)
+left
+['left']
+forward
+current_location: (14, 6)
+goal: (15, 5)
+Current Location post command: (14, 6)
+left
+[]
+forward
+current_location: (14, 5)
+goal: (15, 5)
+Current Location post command: (14, 5)
+Angle: 60, Distance: 117.42
+Updating grid at X=150, Y=58, Distance=117.42, Theta=1.0471975511965976
+Angle: 55, Distance: 116.04
+Updating grid at X=144, Y=66, Distance=116.04, Theta=0.9599310885968813
+Angle: 50, Distance: 115.68
+Updating grid at X=137, Y=74, Distance=115.68, Theta=0.8726646259971648
+Angle: 45, Distance: 115.6
+Updating grid at X=130, Y=81, Distance=115.6, Theta=0.7853981633974483
+Angle: 40, Distance: 100.12
+Updating grid at X=113, Y=76, Distance=100.12, Theta=0.6981317007977318
+Angle: 35, Distance: 99.25
+Updating grid at X=105, Y=81, Distance=99.25, Theta=0.6108652381980153
+Angle: 30, Distance: 99.2
+Updating grid at X=98, Y=85, Distance=99.2, Theta=0.5235987755982988
+Angle: 25, Distance: 80.86
+Updating grid at X=83, Y=73, Distance=80.86, Theta=0.4363323129985824
+Angle: 20, Distance: 80.9
+Updating grid at X=76, Y=76, Distance=80.9, Theta=0.3490658503988659
+Angle: 15, Distance: 81.39
+Updating grid at X=70, Y=78, Distance=81.39, Theta=0.2617993877991494
+Angle: 10, Distance: 81.44
+Updating grid at X=63, Y=80, Distance=81.44, Theta=0.17453292519943295
+Detection(bounding_box=BoundingBox(origin_x=6, origin_y=111, width=602, height=369), categories=[Category(index=None, score=0.26171875, display_name=None, category_name='dog')], keypoints=[])
+Angle: 5, Distance: 80.97
+Updating grid at X=56, Y=80, Distance=80.97, Theta=0.08726646259971647
+Angle: 0, Distance: 81.47
+Updating grid at X=49, Y=81, Distance=81.47, Theta=0.0
+Detection(bounding_box=BoundingBox(origin_x=2, origin_y=125, width=635, height=350), categories=[Category(index=None, score=0.27734375, display_name=None, category_name='dog')], keypoints=[])
+Angle: -5, Distance: 118.18
+Updating grid at X=39, Y=117, Distance=118.18, Theta=-0.08726646259971647
+Angle: -10, Distance: 133.29
+Updating grid at X=26, Y=131, Distance=133.29, Theta=-0.17453292519943295
+Angle: -15, Distance: 133.37
+Updating grid at X=15, Y=128, Distance=133.37, Theta=-0.2617993877991494
+Angle: -20, Distance: 146.98
+Updating grid at X=-1, Y=138, Distance=146.98, Theta=-0.3490658503988659
+Angle: -25, Distance: 144.86
+Updating grid at X=-12, Y=131, Distance=144.86, Theta=-0.4363323129985824
+Angle: -30, Distance: 89.1
+Updating grid at X=5, Y=77, Distance=89.1, Theta=-0.5235987755982988
+Angle: -35, Distance: 143.63
+Updating grid at X=-33, Y=117, Distance=143.63, Theta=-0.6108652381980153
+Angle: -40, Distance: 143.6
+Updating grid at X=-43, Y=110, Distance=143.6, Theta=-0.6981317007977318
+Angle: -45, Distance: 143.58
+Updating grid at X=-52, Y=101, Distance=143.58, Theta=-0.7853981633974483
+Angle: -50, Distance: 143.6
+Updating grid at X=-61, Y=92, Distance=143.6, Theta=-0.8726646259971648
+Angle: -55, Distance: 144.08
+Updating grid at X=-69, Y=82, Distance=144.08, Theta=-0.9599310885968813
+Angle: -60, Distance: 143.72
+Updating grid at X=-75, Y=71, Distance=143.72, Theta=-1.0471975511965976
+[3, 3]
+add_obstacles
+(60, 40)
+(20, 20)
+(14, 5)
+stuff
+object_map(20, 20)
+large_map(60, 40)
+found padding a: 46 b: 25 c: -6 d: -5
+trimmed map(60, 40)
+Start: 0.0
+Goal: 0.0
+['backward']
+orientation command: left
+left
+['backward']
+left
+current_location: (13, 2)
+goal: (15, 5)
+Current Location post command: (13, 2)
+left
+['backward']
+left
+current_location: (13, 2)
+goal: (15, 5)
+Current Location post command: (13, 2)
+backward
+[]
+forward
+current_location: (14, 2)
+goal: (15, 5)
+Current Location post command: (14, 2)
+Angle: -60, Distance: 79.43
+Updating grid at X=-19, Y=39, Distance=79.43, Theta=-1.0471975511965976
+Angle: -55, Distance: 78.74
+Updating grid at X=-15, Y=45, Distance=78.74, Theta=-0.9599310885968813
+Angle: -50, Distance: 79.37
+Updating grid at X=-11, Y=51, Distance=79.37, Theta=-0.8726646259971648
+Angle: -45, Distance: 79.15
+Updating grid at X=-6, Y=55, Distance=79.15, Theta=-0.7853981633974483
+Angle: -40, Distance: 79.26
+Updating grid at X=-1, Y=60, Distance=79.26, Theta=-0.6981317007977318
+Angle: -35, Distance: 79.1
+Updating grid at X=4, Y=64, Distance=79.1, Theta=-0.6108652381980153
+Angle: -30, Distance: 79.02
+Updating grid at X=10, Y=68, Distance=79.02, Theta=-0.5235987755982988
+Angle: -25, Distance: 79.16
+Updating grid at X=16, Y=71, Distance=79.16, Theta=-0.4363323129985824
+Angle: -20, Distance: 79.06
+Updating grid at X=22, Y=74, Distance=79.06, Theta=-0.3490658503988659
+Angle: -15, Distance: 79.61
+Updating grid at X=29, Y=76, Distance=79.61, Theta=-0.2617993877991494
+Angle: -10, Distance: 79.59
+Updating grid at X=36, Y=78, Distance=79.59, Theta=-0.17453292519943295
+Angle: -5, Distance: 79.92
+Updating grid at X=43, Y=79, Distance=79.92, Theta=-0.08726646259971647
+Angle: 0, Distance: 80.31
+Updating grid at X=49, Y=80, Distance=80.31, Theta=0.0
+Angle: 5, Distance: 81.03
+Updating grid at X=56, Y=80, Distance=81.03, Theta=0.08726646259971647
+Detection(bounding_box=BoundingBox(origin_x=0, origin_y=11, width=640, height=457), categories=[Category(index=None, score=0.45703125, display_name=None, category_name='oven')], keypoints=[])
+Detection(bounding_box=BoundingBox(origin_x=5, origin_y=170, width=344, height=298), categories=[Category(index=None, score=0.3125, display_name=None, category_name='oven')], keypoints=[])
+Angle: 10, Distance: -2
+Updating grid at X=49, Y=-1, Distance=-2, Theta=0.17453292519943295
+Detection(bounding_box=BoundingBox(origin_x=0, origin_y=173, width=384, height=304), categories=[Category(index=None, score=0.33203125, display_name=None, category_name='tv')], keypoints=[])
+Detection(bounding_box=BoundingBox(origin_x=0, origin_y=36, width=632, height=440), categories=[Category(index=None, score=0.26171875, display_name=None, category_name='tv')], keypoints=[])
+Angle: 15, Distance: -2
+Updating grid at X=49, Y=-1, Distance=-2, Theta=0.2617993877991494
+Angle: 20, Distance: -2
+Updating grid at X=49, Y=-1, Distance=-2, Theta=0.3490658503988659
+Angle: 25, Distance: -2
+Updating grid at X=49, Y=-1, Distance=-2, Theta=0.4363323129985824
+Angle: 30, Distance: 104.72
+Updating grid at X=101, Y=90, Distance=104.72, Theta=0.5235987755982988
+Angle: 35, Distance: 103.33
+Updating grid at X=108, Y=84, Distance=103.33, Theta=0.6108652381980153
+Angle: 40, Distance: 102.81
+Updating grid at X=115, Y=78, Distance=102.81, Theta=0.6981317007977318
+Angle: 45, Distance: 102.81
+Updating grid at X=121, Y=72, Distance=102.81, Theta=0.7853981633974483
+Angle: 50, Distance: 102.79
+Updating grid at X=127, Y=66, Distance=102.79, Theta=0.8726646259971648
+Angle: 55, Distance: 102.75
+Updating grid at X=133, Y=58, Distance=102.75, Theta=0.9599310885968813
+Angle: 60, Distance: 102.68
+Updating grid at X=137, Y=51, Distance=102.68, Theta=1.0471975511965976
+[3, 3, 3, 3]
+add_obstacles
+(60, 40)
+(20, 20)
+(14, 2)
+stuff
+object_map(20, 20)
+large_map(60, 40)
+found padding a: 46 b: 28 c: -6 d: -8
+trimmed map(60, 40)
+Start: 0.0
+Goal: 0.0
+['right']
+orientation command: backward
+backward
+['right']
+left
+current_location: (15, 1)
+goal: (15, 5)
+Current Location post command: (15, 1)
+backward
+['right']
+left
+current_location: (15, 1)
+goal: (15, 5)
+Current Location post command: (15, 1)
+right
+[]
+forward
+current_location: (15, 2)
+goal: (15, 5)
+Current Location post command: (15, 2)
+Angle: 60, Distance: 39.32
+Updating grid at X=83, Y=19, Distance=39.32, Theta=1.0471975511965976
+Angle: 55, Distance: 38.9
+Updating grid at X=80, Y=22, Distance=38.9, Theta=0.9599310885968813
+Angle: 50, Distance: 39.1
+Updating grid at X=78, Y=25, Distance=39.1, Theta=0.8726646259971648
+Angle: 45, Distance: 40.61
+Updating grid at X=77, Y=28, Distance=40.61, Theta=0.7853981633974483
+Angle: 40, Distance: 39.03
+Updating grid at X=74, Y=29, Distance=39.03, Theta=0.6981317007977318
+Angle: 35, Distance: 39.56
+Updating grid at X=71, Y=32, Distance=39.56, Theta=0.6108652381980153
+Angle: 30, Distance: 39.46
+Updating grid at X=68, Y=34, Distance=39.46, Theta=0.5235987755982988
+Angle: 25, Distance: 40.28
+Updating grid at X=66, Y=36, Distance=40.28, Theta=0.4363323129985824
+Angle: 20, Distance: 41.37
+Updating grid at X=63, Y=38, Distance=41.37, Theta=0.3490658503988659
+Angle: 15, Distance: 42.32
+Updating grid at X=59, Y=40, Distance=42.32, Theta=0.2617993877991494
+Angle: 10, Distance: 44.09
+Updating grid at X=56, Y=43, Distance=44.09, Theta=0.17453292519943295
+Detection(bounding_box=BoundingBox(origin_x=3, origin_y=2, width=632, height=474), categories=[Category(index=None, score=0.27734375, display_name=None, category_name='oven')], keypoints=[])
+Angle: 5, Distance: 43.83
+Updating grid at X=52, Y=43, Distance=43.83, Theta=0.08726646259971647
+Angle: 0, Distance: 43.36
+Updating grid at X=49, Y=43, Distance=43.36, Theta=0.0
+Angle: -5, Distance: 92.91
+Updating grid at X=41, Y=92, Distance=92.91, Theta=-0.08726646259971647
+Angle: -10, Distance: 91.99
+Updating grid at X=34, Y=90, Distance=91.99, Theta=-0.17453292519943295
+Angle: -15, Distance: 91.47
+Updating grid at X=26, Y=88, Distance=91.47, Theta=-0.2617993877991494
+Angle: -20, Distance: 91.59
+Updating grid at X=18, Y=86, Distance=91.59, Theta=-0.3490658503988659
+Angle: -25, Distance: 91.05
+Updating grid at X=11, Y=82, Distance=91.05, Theta=-0.4363323129985824
+Angle: -30, Distance: 91.09
+Updating grid at X=4, Y=78, Distance=91.09, Theta=-0.5235987755982988
+Angle: -35, Distance: 91.12
+Updating grid at X=-3, Y=74, Distance=91.12, Theta=-0.6108652381980153
+Angle: -40, Distance: 90.71
+Updating grid at X=-9, Y=69, Distance=90.71, Theta=-0.6981317007977318
+Angle: -45, Distance: 90.78
+Updating grid at X=-15, Y=64, Distance=90.78, Theta=-0.7853981633974483
+Angle: -50, Distance: 96.23
+Updating grid at X=-24, Y=61, Distance=96.23, Theta=-0.8726646259971648
+Angle: -55, Distance: 90.75
+Updating grid at X=-25, Y=52, Distance=90.75, Theta=-0.9599310885968813
+Angle: -60, Distance: 90.65
+Updating grid at X=-29, Y=45, Distance=90.65, Theta=-1.0471975511965976
+[3]
+add_obstacles
+(60, 40)
+(20, 20)
+(15, 2)
+stuff
+object_map(20, 20)
+large_map(60, 40)
+found padding a: 45 b: 28 c: -5 d: -8
+trimmed map(60, 40)
+Start: 0.0
+Goal: 0.0
+['right']
+orientation command: right
+right
+['right']
+forward
+current_location: (15, 3)
+goal: (15, 5)
+Current Location post command: (15, 3)
+right
+['right']
+forward
+current_location: (15, 4)
+goal: (15, 5)
+Current Location post command: (15, 4)
+right
+[]
+forward
+current_location: (15, 5)
+goal: (15, 5)
+Current Location post command: (15, 5)
+GOAL!!!
