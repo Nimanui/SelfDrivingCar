@@ -24,6 +24,7 @@ class PathFinder:
         self.count = count
 
     def print_grid(self):
+        """debug the current matrix"""
         print('The grid visual:')
         print(
             str(self.grid)
