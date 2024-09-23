@@ -6,8 +6,8 @@ import time
 import numpy as np
 
 PERSON_PAUSE = False
-SPEED = 5
-TIME_PAUSE = 0.1
+SPEED = 10
+TIME_PAUSE = 0.2
 TIME_PAUSE_TURN = 2.5
 START_TURN = True
 TURNING = False
@@ -309,19 +309,19 @@ if __name__ == "__main__":
         scale = 5
         # start = (int(99 / scale), int(49 / scale))
         # goal = (int(20 / scale), int(49 / scale))
-        start = (29, 15)
-        goal = (0, 15)
+        start = (57, 15)
+        goal = (30, 15)
         current_location = start
         orientation = 0
         index = 0
         overall_step_max = 10
-        command_steps = 10
+        command_steps = 30
         distance = 5
         count = 0
         # grid = np.zeros((abs(start[0]) * 1.5, abs(goal[1] * 2)))
-        grid = np.zeros((30 * scale, 30 * scale))
+        grid = np.zeros((60 * scale, 40 * scale))
         print("Big map size" + str(grid.shape))
-        pathfinder = pf.PathFinder(grid, goal, scale_factor=scale, car_size=1)
+        pathfinder = pf.PathFinder(grid, goal, scale_factor=scale, car_size=3)
         while current_location != goal and index < overall_step_max:
             # rescan for a new path
             advMap.reset_grid()
@@ -343,11 +343,12 @@ if __name__ == "__main__":
                         print("GOAL!!!")
                     else:
                         step_count = 0
-                        while step_count < command_steps and command:
+                        while step_count < command_steps and commands:
                             if step_count > 1:
                                 command = commands.pop(0)
                             elif step_count == 0:
                                 command = get_orientation_command()
+                                print("orientation command: " + str(command))
                             next_command = command
                             if commands:
                                 next_command = commands[0]

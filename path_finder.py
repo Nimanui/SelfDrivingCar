@@ -64,24 +64,25 @@ class PathFinder:
         pad_tuple = [[0, 0], [0, 0]]
         trim_tuple = [[0, big_map_shape[0]], [0, big_map_shape[1]]]
         if pada > 0:
-            pad_tuple[1][1] = pada
+            pad_tuple[0][1] = pada
         else:
-            trim_tuple[1][1] = big_map_shape[1] - abs(pada)
+            trim_tuple[0][1] = big_map_shape[0] - abs(pada)
         if padb > 0:
-            pad_tuple[0][1] = padb
+            pad_tuple[1][1] = padb
         else:
-            trim_tuple[0][1] = big_map_shape[0] - abs(padb)
+            trim_tuple[1][1] = big_map_shape[1] - abs(padb)
         if padc > 0:
-            pad_tuple[1][0] = padc
+            pad_tuple[0][0] = padc
         else:
-            trim_tuple[1][0] = abs(padc)
+            trim_tuple[0][0] = abs(padc)
         if padd > 0:
-            pad_tuple[0][0] = padd
+            pad_tuple[1][0] = padd
         else:
-            trim_tuple[0][0] = abs(padd)
+            trim_tuple[1][0] = abs(padd)
 
         map = np.pad(map[trim_tuple[0][0]:trim_tuple[0][1],
               trim_tuple[1][0]:trim_tuple[1][1]], pad_tuple, 'constant', constant_values=0)
+        print("trimmed map" + str(map.shape))
         return map
 
     def get_padding_relative_to_orientation(self, current_location, object_map_shape, large_map_shape, orientation):
