@@ -44,21 +44,23 @@ def read_command_picar4WD(command, start, goal):
 if __name__ == "__main__":
     advMap = amp.AdvancedMapping4WD()
     try:
-        scale = 10
-        start = (int(94/scale), int(49/scale))
-        goal = (int(0/scale), int(99/scale))
+        scale = 6
+        start = (int(90/scale), int(49/scale))
+        goal = (int(0/scale), int(54/scale))
         index = 0
-        overall_step_max = 10
-        command_steps = 3
-        distance = 5
+        overall_step_max = 20
+        command_steps = 10
         count = 0
         while start != goal and index < overall_step_max:
             # rescan for a new path
+            print('--- rescan the path ---')
             advMap.reset_grid()
             try:
                 grid, image_list = advMap.sensor_loop(1 - 2 * (index % 2))
                 pathfinder = PathFinder(grid, image_list, scale_factor=scale, count=count)
                 pathfinder.visualize_grid()
+                print('the start before find path: ', start)
+                print('the goal before find path: ', goal)
                 path = pathfinder.find_path(start, goal)
                 pathfinder.visualize_grid(path)
                 count = pathfinder.count

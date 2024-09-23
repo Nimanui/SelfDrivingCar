@@ -1,3 +1,5 @@
+# path_finder.py
+
 import numpy as np
 import networkx as nx
 import matplotlib.pyplot as plt
@@ -17,10 +19,22 @@ class PathFinder:
         - scale_factor: scale down the grid by n factor
         """
         self.grid = self.scale_down_grid(grid_in, scale_factor)
+        self.print_grid()
         self.car_size = car_size
         self.graph = self._grid_to_graph(self.grid)
         self.image_obstacles = image_obstacles
         self.count = count
+
+    def print_grid(self):
+        print('The grid visual:')
+        print(
+            str(self.grid)
+            .replace('1', '█')
+            .replace('0', '.')
+            .replace(' ', '')
+            .replace('[', '')
+            .replace(']', '\n')
+        )
 
     def scale_down_grid(self, grid, scale_factor):
         """
@@ -105,65 +119,32 @@ class PathFinder:
         Returns:
         - path: list of positions from start to goal
         """
-        print(f"Start: {self.grid[start]}")
-        print(f"Goal: {self.grid[goal]}")
+        print(f"Finding path from {start} to {goal}")
         try:
             path = nx.astar_path(self.graph, start, goal, heuristic=self._heuristic)
+            print(f"Path found: {path}")
             return path
         except nx.NetworkXNoPath:
+            print("No path found.")
             return None
-        except nx.NetworkXError:
+        except nx.NetworkXError as e:
+            print(f"NetworkX Error: {e}")
             return None
-        except Exception:
+        except Exception as e:
+            print(f"Unexpected error during path finding: {e}")
             return None
-
-    def path_to_grid_commands(self, path):
-        """
-        Convert a path of tuples to movement commands.
-        """
-        commands = []
-        if 2 in self.image_obstacles:
-            commands.append("person")
-        if 1 in self.image_obstacles:
-            commands.append("stop")
-        start_turn = True
-        for i in range(1, len(path)):
-            current_position = path[i - 1]
-            next_position = path[i]
-
-            delta_row = next_position[0] - current_position[0]
-            delta_column = next_position[1] - current_position[1]
-
-            # Determine the direction
-            if delta_column == 1 and delta_row == 0:
-                # turn needs space
-                if commands and start_turn:
-                    commands.pop()
-                if commands and start_turn:
-                    commands.pop()
-                    start_turn = False
-                commands.append("right")
-            elif delta_column == -1 and delta_row == 0:
-                # turn needs space
-                if commands and start_turn:
-                    commands.pop()
-                if commands and start_turn:
-                    commands.pop()
-                    start_turn = False
-                commands.append("left")
-                
-            elif delta_column == 0 and delta_row == 1:
-                commands.append("backward")
-                start_turn = True
-            elif delta_column == 0 and delta_row == -1:
-                commands.append("forward")
-                start_turn = True
-
-        return commands
 
     def path_to_commands(self, path, current_direction='NORTH'):
         """
         Convert a path of tuples to movement commands.
+        Each 'left' or 'right' turn is translated into multiple discrete turn commands.
+
+        Parameters:
+        - path: list of tuples representing the path
+        - current_direction: initial direction of the car
+
+        Returns:
+        - commands: list of movement commands
         """
         commands = []
 
@@ -173,15 +154,15 @@ class PathFinder:
         if 1 in self.image_obstacles:
             commands.append("stop")
 
-        if not path or len(path) < 1:
+        if not path or len(path) < 2:
             return commands
 
         # NORTH (0), EAST (1), SOUTH (2), WEST (3)
         direction_map = {
-            (0, 1): 'EAST',  # Moving right
-            (0, -1): 'WEST',  # Moving left
-            (1, 0): 'SOUTH',  # Moving down
-            (-1, 0): 'NORTH'  # Moving up
+            (-1, 0): 'NORTH',  # Moving up
+            (1, 0): 'SOUTH',   # Moving down
+            (0, 1): 'EAST',    # Moving right
+            (0, -1): 'WEST'    # Moving left
         }
 
         for point in range(1, len(path)):
@@ -193,33 +174,39 @@ class PathFinder:
             delta_col = next_pos[1] - current_pos[1]
 
             # Determine desired direction
-            desired_direction = direction_map[(delta_row, delta_col)]
+            movement = (delta_row, delta_col)
+            desired_direction = direction_map.get(movement, current_direction)
 
-            # Add turn if necessary
+            # Add turn commands - if different direction
             if desired_direction != current_direction:
                 turn = self._get_turn(current_direction, desired_direction)
                 if turn:
-                    commands.append(turn)
-                current_direction = desired_direction  # Update to new direction
+                    if turn == 'left' or turn == 'right':
+                        # approximate 90-degree turn
+                        turn_steps = 3
+                        commands.extend([turn] * turn_steps)
+                    elif turn == 'uturn':
+                        # approximate 180-degree turn
+                        turn_steps = 6
+                        # use 'left' for uturn
+                        commands.extend(['left'] * turn_steps)
+                current_direction = desired_direction
 
-                # "forward" if the next segment of the path continues
-                if point < len(path) - 1:
-                    next_delta_row = path[point + 1][0] - next_pos[0]
-                    next_delta_col = path[point + 1][1] - next_pos[1]
-                    next_direction = direction_map[(next_delta_row, next_delta_col)]
-
-                    if next_direction == current_direction:
-                        commands.append("forward")
-
-            else:
-                # Move forward if in the correct direction
-                commands.append("forward")
+            # Add forward command
+            commands.append("forward")
 
         return commands
 
     def _get_turn(self, current_direction, desired_direction):
         """
-        Determine if the car needs to turn left, right, or U-turn (previously called backwards).
+        Determine if the car needs to turn left, right, or perform a U-turn.
+
+        Parameters:
+        - current_direction: current facing direction
+        - desired_direction: desired facing direction after movement
+
+        Returns:
+        - turn: 'left', 'right', or 'uturn'
         """
         directions = ['NORTH', 'EAST', 'SOUTH', 'WEST']
         current_idx = directions.index(current_direction)
@@ -274,25 +261,24 @@ class PathFinder:
         # plt.show()
         self.count += 1
 
+    '''
+    # Example usage:
+    grid = np.zeros((10, 10), dtype=int)
+    grid[4, 5] = 1
+    grid[5, 5] = 1
+    grid[6, 5] = 1
 
-'''
-# Example usage:
-grid = np.zeros((10, 10), dtype=int)
-grid[4, 5] = 1
-grid[5, 5] = 1
-grid[6, 5] = 1
+    image_list = [1,2]
 
-image_list = [1,2]
+    pathfinder = PathFinder(grid, image_list)
+    start = (0, 0)
+    goal = (9, 9)
+    path = pathfinder.find_path(start, goal)
 
-pathfinder = PathFinder(grid, image_list)
-start = (0, 0)
-goal = (9, 9)
-path = pathfinder.find_path(start, goal)
-
-if path:
-    print("Path:", path)
-    commands = pathfinder.path_to_commands(path)
-    print("Commands:", commands)
-else:
-    print("No path found.")
-'''
+    if path:
+        print("Path:", path)
+        commands = pathfinder.path_to_commands(path)
+        print("Commands:", commands)
+    else:
+        print("No path found.")
+    '''
