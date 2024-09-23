@@ -134,9 +134,10 @@ class PathFinder:
         if orientation == 0:
             return obstacle_map
         elif orientation == 1:
-            return np.rot90(obstacle_map, k=3, axes=(0, 1))
+            return np.rot90(obstacle_map, k=-1, axes=(0, 1))
         elif orientation == 2:
-            return np.rot90(obstacle_map, k=2, axes=(0, 1))
+            obstacle_map = np.rot90(obstacle_map, k=1, axes=(0, 1))
+            return np.rot90(obstacle_map, k=1, axes=(0, 1))
         elif orientation == 3:
             return np.rot90(obstacle_map, k=1, axes=(0, 1))
 

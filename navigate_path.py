@@ -6,8 +6,8 @@ import time
 import numpy as np
 
 PERSON_PAUSE = False
-SPEED = 10
-TIME_PAUSE = 0.2
+SPEED = 15
+TIME_PAUSE = 0.1
 TIME_PAUSE_TURN = 2.5
 START_TURN = True
 TURNING = False
@@ -57,6 +57,7 @@ to the picar x
 #     return start, goal
 def increment_car_location_by_direction(command, current_location):
     global START_TURN, ORIENTATION, TURNING
+    turn_factor = 1
     if TURNING:
         return current_location
     if ORIENTATION == 0:
@@ -68,13 +69,13 @@ def increment_car_location_by_direction(command, current_location):
             START_TURN = True
         elif command == "left":
             if START_TURN:
-                current_location = (current_location[0] - 3, current_location[1] - 1)
+                current_location = (current_location[0] - turn_factor, current_location[1] - 1)
                 START_TURN = False
                 TURNING = True
                 ORIENTATION = 3
         elif command == "right":
             if START_TURN:
-                current_location = (current_location[0] - 3, current_location[1] + 1)
+                current_location = (current_location[0] - turn_factor, current_location[1] + 1)
                 START_TURN = False
                 TURNING = True
                 ORIENTATION = 1
@@ -87,13 +88,13 @@ def increment_car_location_by_direction(command, current_location):
             START_TURN = True
         elif command == "left":
             if START_TURN:
-                current_location = (current_location[0] + 3, current_location[1] - 1)
+                current_location = (current_location[0] + turn_factor, current_location[1] - 1)
                 START_TURN = False
                 TURNING = True
                 ORIENTATION = 1
         elif command == "right":
             if START_TURN:
-                current_location = (current_location[0] + 3, current_location[1] + 1)
+                current_location = (current_location[0] + turn_factor, current_location[1] + 1)
                 START_TURN = False
                 TURNING = True
                 ORIENTATION = 3
@@ -125,13 +126,13 @@ def increment_car_location_by_direction(command, current_location):
             START_TURN = True
         elif command == "left":
             if START_TURN:
-                current_location = (current_location[0] + 1, current_location[1] + 3)
+                current_location = (current_location[0] + 1, current_location[1] + turn_factor)
                 START_TURN = False
                 TURNING = True
                 ORIENTATION = 0
         elif command == "right":
             if START_TURN:
-                current_location = (current_location[0] - 1, current_location[1] - 3)
+                current_location = (current_location[0] - 1, current_location[1] - turn_factor)
                 START_TURN = False
                 TURNING = True
                 ORIENTATION = 2
@@ -309,19 +310,19 @@ if __name__ == "__main__":
         scale = 5
         # start = (int(99 / scale), int(49 / scale))
         # goal = (int(20 / scale), int(49 / scale))
-        start = (57, 15)
-        goal = (30, 15)
+        start = (58, 15)
+        goal = (15, 5)
         current_location = start
         orientation = 0
         index = 0
-        overall_step_max = 10
-        command_steps = 30
+        overall_step_max = 20
+        command_steps = 20
         distance = 5
         count = 0
         # grid = np.zeros((abs(start[0]) * 1.5, abs(goal[1] * 2)))
         grid = np.zeros((60 * scale, 40 * scale))
         print("Big map size" + str(grid.shape))
-        pathfinder = pf.PathFinder(grid, goal, scale_factor=scale, car_size=3)
+        pathfinder = pf.PathFinder(grid, goal, scale_factor=scale, car_size=2)
         while current_location != goal and index < overall_step_max:
             # rescan for a new path
             advMap.reset_grid()
