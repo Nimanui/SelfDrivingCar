@@ -1,6 +1,11 @@
 # SelfDrivingCar
 GitHub repo for collaboration with Lab 1B CS437
 
+# Run on course
+for Picar-X
+`python3 navigate_path.py`
+for Picar 4WD
+`python3 navigate_path4wd.py`
 
 ## Test
 - Test advanced mapping in your computer with mocks:
